@@ -15,6 +15,7 @@ vendors = [
   "react"
   "react-bootstrap"
   "react-dom"
+  "bazooka"
 ]
 
 aliases =
