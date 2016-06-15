@@ -35,6 +35,7 @@ module.exports =
     main: "./main"
     comments: "./comments"
     topics: "./topics"
+    blogs: "./blogs"
     vendor: Array::concat keys(aliases), vendors
 
   output:
