@@ -97,9 +97,18 @@ loadInfo = (idBlog) ->
 loadInfoType = (type) ->
   $('#blog_type_note').text lang.get("blog_create_type_#{type}_notice")
 
-searchBlogs = (formId) ->
+toggleInfo = ->
+  $('#blog-mini').slideToggle()
+  $('#blog').slideToggle()
+
+
+###
+  Partially refactored stuff
+###
+
+_searchBlogs = (form_node) ->
   url = routes.blogs.search
-  form = $ "##{formId}"
+  form = $ form_node
 
   inputSearch = form.find('input')
   inputSearch.addClass 'loader'
@@ -109,11 +118,15 @@ searchBlogs = (formId) ->
     $('#blogs-list-original').toggleClass('h-hidden', not result.bStateError)
     $('#blogs-list-search').html(result.sText or '').toggleClass('h-hidden', result.bStateError)
 
-searchBlogsThrottled = debounce searchBlogs, 250
-
-toggleInfo = ->
-  $('#blog-mini').slideToggle()
-  $('#blog').slideToggle()
+searchBlogs = (node) ->
+  inputSearch = node.getElementsByTagName('input')[0]
+  inputSearch.addEventListener(
+    'keyup',
+    debounce(
+      -> _searchBlogs(node),
+      250
+    )
+  )
 
 
 module.exports = {
@@ -122,7 +135,7 @@ module.exports = {
   loadInfoType
   removeInvite
   repeatInvite
-  searchBlogsThrottled
+  searchBlogs
   toggleInfo
   toggleJoin
 }

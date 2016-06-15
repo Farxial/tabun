@@ -2,10 +2,22 @@
 
 <h2 class="page-header">{$aLang.blogs}</h2>
 
-<form action="" method="POST" id="form-blogs-search" onsubmit="return false;" class="search-item">
+<form
+    action=""
+    method="POST"
+    onsubmit="return false;"
+    class="search-item"
+    data-bazooka="blogs_search"
+>
 	<div class="search-input-wrapper">
-		<input type="text" placeholder="{$aLang.blogs_search_title_hint}" autocomplete="off" name="blog_title" class="input-text" value="" onkeyup="ls.blog.searchBlogsThrottled('form-blogs-search')">
-		<div class="input-submit" onclick="jQuery('#form-blogs-search').submit()"></div>
+		<input
+            type="text"
+            placeholder="{$aLang.blogs_search_title_hint}"
+            autocomplete="off"
+            name="blog_title"
+            class="input-text"
+            value=""
+        >
 	</div>
 </form>
 
@@ -17,4 +29,4 @@
 	{include file='paging.tpl' aPaging=$aPaging}
 </div>
 
-{include file='footer.tpl'}
+{include file='footer.tpl' scripts=["blogs"]}
