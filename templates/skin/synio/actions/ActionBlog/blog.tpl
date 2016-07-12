@@ -2,14 +2,6 @@
 {assign var="oUserOwner" value=$oBlog->getOwner()}
 {assign var="oVote" value=$oBlog->getVote()}
 
-
-<script type="text/javascript">
-	jQuery(function($){
-		ls.lang.load({lang_load name="blog_fold_info,blog_expand_info"});
-	});
-</script>
-
-
 {if $oUserCurrent and $oUserCurrent->isAdministrator()}
 	<div id="blog_delete_form" class="modal">
 		<header class="modal-header">
