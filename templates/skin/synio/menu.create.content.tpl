@@ -1,5 +1,6 @@
 <script type="text/javascript">
-	jQuery(document).ready(function($){
+	// Will be deleted
+	document.addEventListener('load', function(){
 		var trigger = $('#dropdown-create-trigger');
 		var menu 	= $('#dropdown-create-menu');
 		var pos 	= trigger.offset();

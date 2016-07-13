@@ -9,7 +9,7 @@
 {include file='editor.tpl' sImgToLoad='blog_description' sSettingsMarkitup='ls.settings.getMarkitupComment()'}
 	
 <script type="text/javascript">
-	jQuery(document).ready(function($){
+	document.addEventListener('load', function(){
 		ls.lang.load({lang_load name="blog_create_type_open_notice,blog_create_type_close_notice"});
 		ls.blog.loadInfoType($('#blog_type').val());
 	});
@@ -33,7 +33,7 @@
 	
 
 	<p><label for="blog_type">{$aLang.blog_create_type}:</label>
-	<select name="blog_type" id="blog_type" class="input-width-200" onChange="ls.blog.loadInfoType(jQuery(this).val());">
+	<select name="blog_type" id="blog_type" class="input-width-200">
 		<option value="open" {if $_aRequest.blog_type=='open'}selected{/if}>{$aLang.blog_create_type_open}</option>
 		<option value="close" {if $_aRequest.blog_type=='close'}selected{/if}>{$aLang.blog_create_type_close}</option>
 	</select>

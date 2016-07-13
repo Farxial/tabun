@@ -20,17 +20,20 @@ module.exports =
     self: '/ajax/blogs/self'
     search: '/blogs/ajax-search/'
   blog:
+    add: '/blog/add/'
     join: '/blog/ajaxblogjoin/'
     invite: '/blog/ajaxaddbloginvite/'
     reinvite: '/blog/ajaxrebloginvite/'
     remove: '/blog/ajaxremovebloginvite/'
     info: '/blog/ajaxbloginfo/'
   topic:
+    add: '/topic/add/'
     comment: '/blog/ajaxaddcomment/'
     respond: '/blog/ajaxresponsecomment/'
   comment:
     delete: '/ajax/comment/delete/'
   talk:
+    add: '/talk/add/'
     comment: '/talk/ajaxaddcomment/'
     respond: '/talk/ajaxresponsecomment/'
     addUser: '/talk/ajaxaddtalkuser/'
