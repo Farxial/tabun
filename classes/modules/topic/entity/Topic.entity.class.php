@@ -570,7 +570,7 @@ class ModuleTopic_EntityTopic extends Entity
      */
     public function getExtra()
     {
-        return $this->_getDataOne('topic_extra') ? $this->_getDataOne('topic_extra') : serialize('');
+        return $this->_getDataOne('topic_extra') ? $this->_getDataOne('topic_extra') : serialize([]);
     }
 
     /**

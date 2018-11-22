@@ -16,37 +16,10 @@
 */
 
 /**
- * Если не стоит расширения mb
- *
- * @param string $s
- * @return string
- */
-if (!function_exists('mb_strlen')) {
-    function mb_strlen($s, $sEncode = "UTF-8")
-    {
-        $length = strlen(iconv($sEncode, 'Windows-1251', $s));
-        return (int)$length;
-    }
-}
-
-/**
- * Если не стоит расширения mb
- */
-if (!function_exists('mb_strtolower')) {
-    function mb_strtolower($s, $sEncode = "UTF-8")
-    {
-        $s = iconv($sEncode, "Windows-1251", $s);
-        $s = strtolower($s);
-        $s = iconv("Windows-1251", $sEncode, $s);
-        return $s;
-    }
-}
-
-/**
  * Проверяет запрос послан как ajax или нет
  * Пришлось продублировать здесь, чтобы получить к ней доступ до подключения роутера
  *
- * @return unknown
+ * @return bool
  */
 function isAjaxRequest()
 {
@@ -130,7 +103,7 @@ function func_generator($iLength = 10)
     if ($iLength > 32) {
         $iLength = 32;
     }
-    return substr(bin2hex(mcrypt_create_iv(32)), 0, $iLength);
+    return substr(bin2hex(openssl_random_pseudo_bytes(16)), 0, 32);
 }
 
 /**
@@ -152,7 +125,7 @@ function func_htmlspecialchars(&$data, $walkIndex = null)
 /**
  * stripslashes умеющая обрабатывать массивы
  *
- * @param unknown_type $data
+ * @param string $data
  */
 function func_stripslashes(&$data)
 {
@@ -172,11 +145,11 @@ function func_stripslashes(&$data)
 /**
  * Проверяет на корректность значение соглавно правилу
  *
- * @param unknown_type $sValue
- * @param unknown_type $sParam
- * @param unknown_type $iMin
- * @param unknown_type $iMax
- * @return unknown
+ * @param string $sValue
+ * @param string $sParam
+ * @param int $iMin
+ * @param int $iMax
+ * @return mixed
  */
 function func_check($sValue, $sParam, $iMin = 1, $iMax = 100)
 {
@@ -228,25 +201,41 @@ function func_check($sValue, $sParam, $iMin = 1, $iMax = 100)
 /**
  * Определяет IP адрес
  *
- * @return unknown
+ * @return string
  */
 function func_getIp()
 {
-    // Если запускаем через консоль, то REMOTE_ADDR не определен
-    return isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '127.0.0.1';
+    if (getenv('HTTP_CLIENT_IP')) {
+        $ipAddress = getenv('HTTP_CLIENT_IP');
+    } elseif (getenv('HTTP_X_FORWARDED_FOR')) {
+        $ipAddress = getenv('HTTP_X_FORWARDED_FOR');
+    } elseif (getenv('HTTP_X_FORWARDED')) {
+        $ipAddress = getenv('HTTP_X_FORWARDED');
+    } elseif (getenv('HTTP_FORWARDED_FOR')) {
+        $ipAddress = getenv('HTTP_FORWARDED_FOR');
+    } elseif (getenv('HTTP_FORWARDED')) {
+        $ipAddress = getenv('HTTP_FORWARDED');
+    } elseif (getenv('REMOTE_ADDR')) {
+        $ipAddress = getenv('REMOTE_ADDR');
+    } else {
+        // Если запускаем через консоль, то REMOTE_ADDR не определен
+        $ipAddress = '127.0.0.1';
+    }
+
+    return $ipAddress;
 }
 
 
 /**
  * Заменяет стандартную header('Location: *');
  *
- * @param unknown_type $sLocation
+ * @param string $sLocation
  */
 function func_header_location($sLocation)
 {
     $sProtocol = isset($_SERVER['SERVER_PROTOCOL']) ? $_SERVER['SERVER_PROTOCOL'] : 'HTTP/1.1';
     header("{$sProtocol} 301 Moved Permanently");
-    header('Location: ' . $sLocation);
+    header("Location: {$sLocation}");
     exit();
 }
 
@@ -290,8 +279,9 @@ function func_rmdir($sPath)
 /**
  * Возвращает обрезанный текст по заданное число слов
  *
- * @param unknown_type $sText
- * @param unknown_type $iCountWords
+ * @param string $sText
+ * @param int $iCountWords
+ * @return string
  */
 function func_text_words($sText, $iCountWords)
 {
@@ -305,16 +295,16 @@ function func_text_words($sText, $iCountWords)
 /**
  * Изменяет элементы массива
  *
- * @param unknown_type $array
- * @param unknown_type $sBefore
- * @param unknown_type $sAfter
+ * @param array $array
+ * @param string $sBefore
+ * @param string $sAfter
  * @return array
  */
 function func_array_change_value($array, $sBefore = '', $sAfter = '')
 {
     foreach ($array as $key => $value) {
         if (is_array($value)) {
-            $array[$key] = func_change_array_value($value, $sBefore, $sAfter);
+            $array[$key] = func_array_change_value($value, $sBefore, $sAfter);
         } elseif (!is_object($value)) {
             $array[$key] = $sBefore . $array[$key] . $sAfter;
         }
@@ -325,8 +315,8 @@ function func_array_change_value($array, $sBefore = '', $sAfter = '')
 /**
  * Меняет числовые ключи массива на их значения
  *
- * @param unknown_type $arr
- * @param unknown_type $sDefValue
+ * @param array $arr
+ * @param mixed $sDefValue
  */
 function func_array_simpleflip(&$arr, $sDefValue = 1)
 {
@@ -338,6 +328,12 @@ function func_array_simpleflip(&$arr, $sDefValue = 1)
     }
 }
 
+/**
+ * @param $array
+ * @param string $sBefore
+ * @param string $sAfter
+ * @return array
+ */
 function func_build_cache_keys($array, $sBefore = '', $sAfter = '')
 {
     $aRes = array();
@@ -347,6 +343,11 @@ function func_build_cache_keys($array, $sBefore = '', $sAfter = '')
     return $aRes;
 }
 
+/**
+ * @param $array
+ * @param $aKeys
+ * @return array
+ */
 function func_array_sort_by_keys($array, $aKeys)
 {
     $aResult = array();
@@ -361,9 +362,9 @@ function func_array_sort_by_keys($array, $aKeys)
 /**
  * Сливает два ассоциативных массива
  *
- * @param unknown_type $aArr1
- * @param unknown_type $aArr2
- * @return unknown
+ * @param array $aArr1
+ * @param array $aArr2
+ * @return array
  */
 function func_array_merge_assoc($aArr1, $aArr2)
 {
@@ -438,23 +439,35 @@ if (!function_exists('class_alias')) {
     }
 }
 
-
+/**
+ * @param $sStr
+ * @return string
+ */
 function func_underscore($sStr)
 {
     return strtolower(preg_replace('/([^A-Z])([A-Z])/', "$1_$2", $sStr));
 }
 
+/**
+ * @param $sStr
+ * @return string
+ */
 function func_camelize($sStr)
 {
     $aParts = explode('_', $sStr);
-    $sCamelized = '';
+    $sCamelizedParts = [];
+
     foreach ($aParts as $sPart) {
-        $sCamelized .= ucfirst($sPart);
+        $sCamelizedParts[] = ucfirst($sPart);
     }
-    return $sCamelized;
+
+    return implode('', $sCamelizedParts);
 }
 
-
+/**
+ * @param bool $bAll
+ * @return array
+ */
 function func_list_plugins($bAll = false)
 {
     $sPluginsDir = Config::Get('path.root.server') . '/plugins';
@@ -483,6 +496,12 @@ function func_list_plugins($bAll = false)
     return $aPlugin;
 }
 
+/**
+ * @param Entity $oEntity
+ * @param null $aMethods
+ * @param string $sPrefix
+ * @return array
+ */
 function func_convert_entity_to_array(Entity $oEntity, $aMethods = null, $sPrefix = '')
 {
     if (!is_array($aMethods)) {

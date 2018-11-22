@@ -259,9 +259,6 @@ class ModuleTopic_MapperTopic extends Mapper
     protected function buildFilter($aFilter)
     {
         $sWhere = '';
-/*        if (isset($aFilter['topic_date_more'])) {
-            $sWhere .= " AND t.topic_date_add >  '" . mysql_real_escape_string($aFilter['topic_date_more']) . "'";
-        }*/
 
         if (isset($aFilter['topic_date_more'])) {
             $sWhere .= " AND t.topic_date_add >  " . $this->oDb->escape($aFilter['topic_date_more']);
