@@ -22,22 +22,23 @@
  * @package engine
  * @since 1.0
  */
-abstract class Mapper extends LsObject {
-	/**
-	 * Объект подключения к базе данных
-	 *
-	 * @var DbSimple_Generic_Database
-	 */
-	protected $oDb;
+abstract class Mapper extends LsObject
+{
+    /**
+     * Объект подключения к базе данных
+     *
+     * @var DbSimple_Generic_Database
+     */
+    protected $oDb;
 
-	/**
-	 * Передаем коннект к БД
-	 *
-	 * @param DbSimple_Generic_Database|object $oDb
-	 */
-	public function __construct($oDb) {
-		$this->oDb = $oDb;
-	}
+    /**
+     * Передаем коннект к БД
+     *
+     * @param DbSimple_Generic_Database|object $oDb
+     */
+    public function __construct($oDb)
+    {
+        $this->oDb = $oDb;
+    }
 
 }
-?>

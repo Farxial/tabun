@@ -1,6 +1,9 @@
 <?php
 
 
-class BlockHerdmind extends Block {
-    public function Exec() {}
+class BlockHerdmind extends Block
+{
+    public function Exec()
+    {
+    }
 }

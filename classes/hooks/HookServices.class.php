@@ -9,7 +9,22 @@ class HookServices extends Hook
         $this->AddHook('template_banners', 'Banners', __CLASS__, -100);
     }
 
-    private function getJSON($sServiceName) {
+    public function Quotes()
+    {
+        $sNotFound = "¯\\_(ツ)_/¯";
+
+        $aDecoded = $this->getJSON("twicher");
+
+        if (array_key_exists('text', $aDecoded)) {
+            return $aDecoded['text'];
+        } else {
+            return $sNotFound;
+        }
+
+    }
+
+    private function getJSON($sServiceName)
+    {
         $ch = curl_init();
 
         $sServiceURL = Config::Get('misc.services')[$sServiceName];
@@ -32,26 +47,12 @@ class HookServices extends Hook
         return json_decode($data, true);
     }
 
-    public function Quotes()
-    {
-        $sNotFound = "¯\\_(ツ)_/¯";
-
-        $aDecoded = $this->getJSON("twicher");
-
-        if (array_key_exists('text', $aDecoded)) {
-            return $aDecoded['text'];
-        } else {
-            return $sNotFound;
-        }
-
-    }
-
     public function Donations()
     {
         $aDecoded = $this->getJSON("donations");
 
         $callback = function ($sUser) {
-            if($oUser=$this->User_GetUserByLogin($sUser)) {
+            if ($oUser = $this->User_GetUserByLogin($sUser)) {
                 return [
                     'login' => $oUser->getLogin(),
                     'url' => $oUser->getUserWebPath(),
@@ -70,7 +71,7 @@ class HookServices extends Hook
 
         $this->Viewer_Assign('aDonaters', $aDonaters);
 
-		return $this->Viewer_Fetch('donation_list.tpl');
+        return $this->Viewer_Fetch('donation_list.tpl');
     }
 
     public function Banners()

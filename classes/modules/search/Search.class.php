@@ -55,7 +55,7 @@ class ModuleSearch extends Module
     /**
      * Делает указанный запрос
      *
-     * @param string $aSearchParams Параметры поиска
+     * @param array $aSearchParams Параметры поиска
      * @param string $sQuery Строка запроса
      * @param int $iPage Страница поиска
      * @return array

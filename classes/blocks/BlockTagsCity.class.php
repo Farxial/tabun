@@ -21,23 +21,24 @@
  * @package blocks
  * @since 1.0
  */
-class BlockTagsCity extends Block {
-	/**
-	 * Запуск обработки
-	 */
-	public function Exec() {
-		/**
-		 * Получаем города
-		 */
-		$aCities=$this->Geo_GetGroupCitiesByTargetType('user',20);
-		/**
-		 * Формируем облако тегов
-		 */
-		$aCities = func_make_cloud($aCities);
-		/**
-		 * Выводим в шаблон
-		 */
-		$this->Viewer_Assign("aCityList",$aCities);
-	}
+class BlockTagsCity extends Block
+{
+    /**
+     * Запуск обработки
+     */
+    public function Exec()
+    {
+        /**
+         * Получаем города
+         */
+        $aCities = $this->Geo_GetGroupCitiesByTargetType('user', 20);
+        /**
+         * Формируем облако тегов
+         */
+        $aCities = func_make_cloud($aCities);
+        /**
+         * Выводим в шаблон
+         */
+        $this->Viewer_Assign("aCityList", $aCities);
+    }
 }
-?>

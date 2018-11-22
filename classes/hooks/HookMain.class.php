@@ -21,31 +21,34 @@
  * @package hooks
  * @since 1.0
  */
-class HookMain extends Hook {
-	/**
-	 * Регистрируем хуки
-	 */
-	public function RegisterHook() {
-		$this->AddHook('init_action','InitAction',__CLASS__,1000);
-	}
-	/**
-	 * Обработка хука инициализации экшенов
-	 */
-	public function InitAction() {
-		/**
-		 * Проверяем наличие директории install
-		 */
-		if(is_dir(rtrim(Config::Get('path.root.server'),'/').'/install')){
-			$this->Message_AddErrorSingle($this->Lang_Get('install_directory_exists'));
-			Router::Action('error');
-		}
-		/**
-		 * Проверка на закрытый режим
-		 */
-		$oUserCurrent=$this->User_GetUserCurrent();
-		if (!$oUserCurrent and Config::Get('general.close') and Router::GetAction()!='registration' and Router::GetAction()!='login') {
-			Router::Action('login');
-		}
-	}
+class HookMain extends Hook
+{
+    /**
+     * Регистрируем хуки
+     */
+    public function RegisterHook()
+    {
+        $this->AddHook('init_action', 'InitAction', __CLASS__, 1000);
+    }
+
+    /**
+     * Обработка хука инициализации экшенов
+     */
+    public function InitAction()
+    {
+        /**
+         * Проверяем наличие директории install
+         */
+        if (is_dir(rtrim(Config::Get('path.root.server'), '/') . '/install')) {
+            $this->Message_AddErrorSingle($this->Lang_Get('install_directory_exists'));
+            Router::Action('error');
+        }
+        /**
+         * Проверка на закрытый режим
+         */
+        $oUserCurrent = $this->User_GetUserCurrent();
+        if (!$oUserCurrent and Config::Get('general.close') and Router::GetAction() != 'registration' and Router::GetAction() != 'login') {
+            Router::Action('login');
+        }
+    }
 }
-?>

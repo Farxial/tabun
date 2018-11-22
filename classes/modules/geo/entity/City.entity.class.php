@@ -21,7 +21,7 @@
  * @package modules.geo
  * @since 1.0
  */
-class ModuleGeo_EntityCity extends ModuleGeo_EntityGeo {
+class ModuleGeo_EntityCity extends ModuleGeo_EntityGeo
+{
 
 }
-?>

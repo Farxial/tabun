@@ -21,113 +21,121 @@
  * @package actions
  * @since 1.0
  */
-class ActionComments extends Action {
-	/**
-	 * Текущий юзер
-	 *
-	 * @var ModuleUser_EntityUser|null
-	 */
-	protected $oUserCurrent=null;
-	/**
-	 * Главное меню
-	 *
-	 * @var string
-	 */
-	protected $sMenuHeadItemSelect='blog';
+class ActionComments extends Action
+{
+    /**
+     * Текущий юзер
+     *
+     * @var ModuleUser_EntityUser|null
+     */
+    protected $oUserCurrent = null;
+    /**
+     * Главное меню
+     *
+     * @var string
+     */
+    protected $sMenuHeadItemSelect = 'blog';
 
-	/**
-	 * Инициализация
-	 */
-	public function Init() {
-		$this->oUserCurrent=$this->User_GetUserCurrent();
-		if ($this->oUserCurrent and $this->oUserCurrent->getRating() < Config::Get('module.user.bad_rating')) {
-			$this->User_Logout();
-			return parent::EventNotFound();
-		};
-	}
-	/**
-	 * Регистрация евентов
-	 */
-	protected function RegisterEvent() {
-		$this->AddEventPreg('/^(page([1-9]\d{0,5}))?$/i','EventComments');
-		$this->AddEventPreg('/^\d+$/i','EventShowComment');
-	}
+    /**
+     * Инициализация
+     */
+    public function Init()
+    {
+        $this->oUserCurrent = $this->User_GetUserCurrent();
+        if ($this->oUserCurrent and $this->oUserCurrent->getRating() < Config::Get('module.user.bad_rating')) {
+            $this->User_Logout();
+            return parent::EventNotFound();
+        };
+    }
+
+    /**
+     * Выполняется при завершении работы экшена
+     *
+     */
+    public function EventShutdown()
+    {
+        /**
+         * Загружаем в шаблон необходимые переменные
+         */
+        $this->Viewer_Assign('sMenuHeadItemSelect', $this->sMenuHeadItemSelect);
+    }
 
 
-	/**********************************************************************************
-	 ************************ РЕАЛИЗАЦИЯ ЭКШЕНА ***************************************
-	 **********************************************************************************
-	 */
+    /**********************************************************************************
+     ************************ РЕАЛИЗАЦИЯ ЭКШЕНА ***************************************
+     **********************************************************************************
+     */
 
-	/**
-	 * Выводим список комментариев
-	 *
-	 */
-	protected function EventComments() {
-		/**
-		 * Передан ли номер страницы
-		 */
-		$iPage=$this->GetEventMatch(2) ? $this->GetEventMatch(2) : 1;
-		/**
-		 * Исключаем из выборки идентификаторы закрытых блогов (target_parent_id)
-		 */
-		$aCloseBlogs = ($this->oUserCurrent)
-			? $this->Blog_GetInaccessibleBlogsByUser($this->oUserCurrent)
-			: $this->Blog_GetInaccessibleBlogsByUser();
-		/**
-		 * Получаем список комментов
-		 */
-		$aResult=$this->Comment_GetCommentsAll('topic',$iPage,Config::Get('module.comment.per_page'),array(),$aCloseBlogs);
-		$aComments=$aResult['collection'];
-		/**
-		 * Формируем постраничность
-		 */
-		$aPaging=$this->Viewer_MakePaging($aResult['count'],$iPage,Config::Get('module.comment.per_page'),Config::Get('pagination.pages.count'),Router::GetPath('comments'));
-		/**
-		 * Загружаем переменные в шаблон
-		 */
-		$this->Viewer_Assign('aPaging',$aPaging);
-		$this->Viewer_Assign("aComments",$aComments);
-		/**
-		 * Устанавливаем title страницы
-		 */
-		$this->Viewer_AddHtmlTitle($this->Lang_Get('comments_all'));
-		$this->Viewer_SetHtmlRssAlternate(Router::GetPath('rss').'allcomments/',$this->Lang_Get('comments_all'));
-		/**
-		 * Устанавливаем шаблон вывода
-		 */
-		$this->SetTemplateAction('index');
-	}
-	/**
-	 * Обрабатывает ссылку на конкретный комментарий, определят к какому топику он относится и перенаправляет на него
-	 * Актуально при использовании постраничности комментариев
-	 */
-	protected function EventShowComment() {
-		$iCommentId=$this->sCurrentEvent;
-		/**
-		 * Проверяем к чему относится комментарий
-		 */
-		if (!($oComment=$this->Comment_GetCommentById($iCommentId))) {
-			return parent::EventNotFound();
-		}
-		if ($oComment->getTargetType()!='topic' or !($oTopic=$oComment->getTarget())) {
-			return parent::EventNotFound();
-		}
-		/**
-		 * Определяем необходимую страницу для отображения комментария
-		 */
-        Router::Location($oTopic->getUrl().'#comment'.$oComment->getId());
-		exit();
-	}
-	/**
-	 * Выполняется при завершении работы экшена
-	 *
-	 */
-	public function EventShutdown() {
-		/**
-		 * Загружаем в шаблон необходимые переменные
-		 */
-		$this->Viewer_Assign('sMenuHeadItemSelect',$this->sMenuHeadItemSelect);
-	}
+    /**
+     * Регистрация евентов
+     */
+    protected function RegisterEvent()
+    {
+        $this->AddEventPreg('/^(page([1-9]\d{0,5}))?$/i', 'EventComments');
+        $this->AddEventPreg('/^\d+$/i', 'EventShowComment');
+    }
+
+    /**
+     * Выводим список комментариев
+     *
+     */
+    protected function EventComments()
+    {
+        /**
+         * Передан ли номер страницы
+         */
+        $iPage = $this->GetEventMatch(2) ? $this->GetEventMatch(2) : 1;
+        /**
+         * Исключаем из выборки идентификаторы закрытых блогов (target_parent_id)
+         */
+        $aCloseBlogs = ($this->oUserCurrent)
+            ? $this->Blog_GetInaccessibleBlogsByUser($this->oUserCurrent)
+            : $this->Blog_GetInaccessibleBlogsByUser();
+        /**
+         * Получаем список комментов
+         */
+        $aResult = $this->Comment_GetCommentsAll('topic', $iPage, Config::Get('module.comment.per_page'), array(), $aCloseBlogs);
+        $aComments = $aResult['collection'];
+        /**
+         * Формируем постраничность
+         */
+        $aPaging = $this->Viewer_MakePaging($aResult['count'], $iPage, Config::Get('module.comment.per_page'), Config::Get('pagination.pages.count'), Router::GetPath('comments'));
+        /**
+         * Загружаем переменные в шаблон
+         */
+        $this->Viewer_Assign('aPaging', $aPaging);
+        $this->Viewer_Assign("aComments", $aComments);
+        /**
+         * Устанавливаем title страницы
+         */
+        $this->Viewer_AddHtmlTitle($this->Lang_Get('comments_all'));
+        $this->Viewer_SetHtmlRssAlternate(Router::GetPath('rss') . 'allcomments/', $this->Lang_Get('comments_all'));
+        /**
+         * Устанавливаем шаблон вывода
+         */
+        $this->SetTemplateAction('index');
+    }
+
+    /**
+     * Обрабатывает ссылку на конкретный комментарий, определят к какому топику он относится и перенаправляет на него
+     * Актуально при использовании постраничности комментариев
+     */
+    protected function EventShowComment()
+    {
+        $iCommentId = $this->sCurrentEvent;
+        /**
+         * Проверяем к чему относится комментарий
+         */
+        if (!($oComment = $this->Comment_GetCommentById($iCommentId))) {
+            return parent::EventNotFound();
+        }
+        if ($oComment->getTargetType() != 'topic' or !($oTopic = $oComment->getTarget())) {
+            return parent::EventNotFound();
+        }
+        /**
+         * Определяем необходимую страницу для отображения комментария
+         */
+        Router::Location($oTopic->getUrl() . '#comment' . $oComment->getId());
+        exit();
+    }
 }
-?>

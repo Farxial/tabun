@@ -22,60 +22,66 @@
  * @package engine
  * @since 1.0
  */
-abstract class Block extends LsObject {
-	/**
-	 * Ядро движка
-	 *
-	 * @var Engine|null
-	 */
-	protected $oEngine=null;
-	/**
-	 * Список параметров блока
-	 *
-	 * @var array
-	 */
-	protected $aParams=array();
+abstract class Block extends LsObject
+{
+    /**
+     * Ядро движка
+     *
+     * @var Engine|null
+     */
+    protected $oEngine = null;
+    /**
+     * Список параметров блока
+     *
+     * @var array
+     */
+    protected $aParams = array();
 
-	/**
-	 * При создании блока передаем в него параметры
-	 *
-	 * @param array $aParams Список параметров блока
-	 */
-	public function __construct($aParams) {
-		$this->aParams=$aParams;
-		$this->oEngine=Engine::getInstance();
-	}
-	/**
-	 * Возвращает параметр по имени
-	 *
-	 * @param string $sName	Имя параметра
-	 * @param null|mixed $def	Дефолтное значение параметра, возвращается если такого параметра нет
-	 * @return mixed
-	 */
-	protected function GetParam($sName,$def=null) {
-		if (isset($this->aParams[$sName])) {
-			return $this->aParams[$sName];
-		} else {
-			return $def;
-		}
-	}
-	/**
-	 * Ставим хук на вызов неизвестного метода и считаем что хотели вызвать метод какого либо модуля
-	 * @see Engine::_CallModule
-	 *
-	 * @param string $sName Имя метода
-	 * @param array $aArgs Аргументы
-	 * @return mixed
-	 */
-	public function __call($sName,$aArgs) {
-		return $this->oEngine->_CallModule($sName,$aArgs);
-	}
-	/**
-	 * Метод запуска обработки блока.
-	 * Его необходимо определять в конкретном блоге.
-	 *
-	 * @abstract
-	 */
-	abstract public function Exec();
+    /**
+     * При создании блока передаем в него параметры
+     *
+     * @param array $aParams Список параметров блока
+     */
+    public function __construct($aParams)
+    {
+        $this->aParams = $aParams;
+        $this->oEngine = Engine::getInstance();
+    }
+
+    /**
+     * Ставим хук на вызов неизвестного метода и считаем что хотели вызвать метод какого либо модуля
+     * @see Engine::_CallModule
+     *
+     * @param string $sName Имя метода
+     * @param array $aArgs Аргументы
+     * @return mixed
+     */
+    public function __call($sName, $aArgs)
+    {
+        return $this->oEngine->_CallModule($sName, $aArgs);
+    }
+
+    /**
+     * Метод запуска обработки блока.
+     * Его необходимо определять в конкретном блоге.
+     *
+     * @abstract
+     */
+    abstract public function Exec();
+
+    /**
+     * Возвращает параметр по имени
+     *
+     * @param string $sName Имя параметра
+     * @param null|mixed $def Дефолтное значение параметра, возвращается если такого параметра нет
+     * @return mixed
+     */
+    protected function GetParam($sName, $def = null)
+    {
+        if (isset($this->aParams[$sName])) {
+            return $this->aParams[$sName];
+        } else {
+            return $def;
+        }
+    }
 }
-?>
