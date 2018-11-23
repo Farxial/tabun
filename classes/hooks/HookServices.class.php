@@ -2,6 +2,9 @@
 
 class HookServices extends Hook
 {
+    /**
+     *
+     */
     public function RegisterHook()
     {
         $this->AddHook('template_quotes', 'Quotes', __CLASS__, -100);
@@ -9,13 +12,16 @@ class HookServices extends Hook
         $this->AddHook('template_banners', 'Banners', __CLASS__, -100);
     }
 
+    /**
+     * @return mixed|string
+     */
     public function Quotes()
     {
         $sNotFound = "¯\\_(ツ)_/¯";
 
         $aDecoded = $this->getJSON("twicher");
 
-        if (array_key_exists('text', $aDecoded)) {
+        if ($aDecoded && array_key_exists('text', $aDecoded)) {
             return $aDecoded['text'];
         } else {
             return $sNotFound;
@@ -23,6 +29,10 @@ class HookServices extends Hook
 
     }
 
+    /**
+     * @param $sServiceName
+     * @return bool|array
+     */
     private function getJSON($sServiceName)
     {
         $ch = curl_init();
@@ -47,6 +57,9 @@ class HookServices extends Hook
         return json_decode($data, true);
     }
 
+    /**
+     * @return mixed
+     */
     public function Donations()
     {
         $aDecoded = $this->getJSON("donations");
