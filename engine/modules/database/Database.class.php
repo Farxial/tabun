@@ -152,13 +152,13 @@ class ModuleDatabase extends Module
     }
 
     /**
-     * Получает объект БД
+     * Возвращает DSN строку из конфига
      *
-     * @param array|null $aConfig - конфиг подключения к БД(хост, логин, пароль, тип бд, имя бд), если null, то используются параметры из конфига Config::Get('db.params')
-     * @return DbSimple_Generic_Database DbSimple
+     * @param null $aConfig
+     *
+     * @return string
      */
-    public function GetConnect($aConfig = null)
-    {
+    protected function GetDSNByConfig($aConfig=null) {
         /**
          * Если конфиг не передан то используем главный конфиг БД из config.php
          */
@@ -169,11 +169,30 @@ class ModuleDatabase extends Module
         if (isset($aConfig['params']) and is_array($aConfig['params'])) {
             $sParams = '?' . http_build_query($aConfig['params'], '', '&');
         }
-        $sDSN = $aConfig['type'] . 'wrapper://' . $aConfig['user'] . ':' . $aConfig['pass'] . '@' . $aConfig['host'] . ':' . $aConfig['port'] . '/' . $aConfig['dbname'] . $sParams;
+        return $aConfig['type'] . '://' . $aConfig['user'] . ':' . $aConfig['pass'] . '@' . $aConfig['host'] . ':' . $aConfig['port'] . '/' . $aConfig['dbname'] . $sParams;
+
+        // old code was
+        // $sDSN = $aConfig['type'] . 'wrapper://' . $aConfig['user'] . ':' . $aConfig['pass'] . '@' . $aConfig['host'] . ':' . $aConfig['port'] . '/' . $aConfig['dbname'] . $sParams;
+    }
+
+    /**
+     * Получает объект БД
+     *
+     * @param array|null $aConfig - конфиг подключения к БД(хост, логин, пароль, тип бд, имя бд), если null, то используются параметры из конфига Config::Get('db.params')
+     * @return DbSimple_Generic_Database DbSimple
+     */
+    public function GetConnect($aConfig = null)
+    {
+        /**
+         * Получаем DSN
+         */
+        $sDSN = $this->GetDSNByConfig($aConfig);
+
         /**
          * Создаём хеш подключения, уникальный для каждого конфига
          */
         $sDSNKey = md5($sDSN);
+
         /**
          * Проверяем создавали ли уже коннект с такими параметрами подключения(DSN)
          */
