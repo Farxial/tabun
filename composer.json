@@ -12,6 +12,7 @@
     "elasticsearch/elasticsearch": "2.2.1",
     "xxtea/xxtea": "1.0.1",
     "kalaspuff/redis-cache-zend-framework": "dev-master#65bdfa098abde74bc74c9a5d101daec8c9b01a97",
-    "agelxnash/jevix": "^1.2"
+    "agelxnash/jevix": "^1.2",
+    "php-amqplib/php-amqplib": "^2.8"
   }
 }
