@@ -572,3 +572,18 @@ function func_urlspecialchars($data)
         return strtr($data, $aTable);
     }
 }
+
+/**
+ * Dump and die
+ * @param $args
+ */
+if (!function_exists('dd')) {
+    function dd(...$args)
+    {
+        echo '<pre>';
+        foreach ($args as $a) {
+            var_dump($a);
+        }
+        die;
+    }
+}

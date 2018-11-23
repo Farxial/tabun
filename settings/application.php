@@ -275,11 +275,11 @@ $config['sys']['elastic']['hosts'] = [
 ];
 
 /**
- * Разное
+ * Разное @todo: перенести дефиницию этих значений в loader, задавать их относительно ___path.root.server___
  */
 $config['misc']['ga'] = '';
-$config['misc']['ver']['front'] = file_get_contents("/static/frontend.version");
-$config['misc']['ver']['code'] = file_get_contents("/app/backend.version") ?: "dev"; // Just for convenience
+$config['misc']['ver']['front'] = is_readable("/static/frontend.version") ? file_get_contents("/static/frontend.version") : '';
+$config['misc']['ver']['code'] = is_readable("/app/backend.version") ? file_get_contents("/app/backend.version") : "dev";
 $config['misc']['debug'] = false;
 
 // Отключение подсчёта числа страниц для первых страниц ленты комментариев для их ускорения.
