@@ -3,7 +3,7 @@
 {assign var="oVote" value=$oBlog->getVote()}
 {assign var="oBlogId" value=$oBlog->getId()}
 {assign var="oBlogRating" value=$oBlog->getRating()}
-{assign var="bVoteInfoEnabled" value=$LS->ACL_CheckSimpleAccessLevel($oConfig->GetValue('vote_state.blog.na_enable_level'), $oUserCurrent, $oBlog, 'blog')}
+{assign var="bVoteInfoEnabled" value=$LS->ACL_CheckSimpleAccessLevel($oConfig->GetValue('vote_list.blog.user_required_level'), $oUserCurrent, $oBlog, 'blog')}
 
 {if $oUserCurrent and $oUserCurrent->isAdministrator()}
 	<div id="blog_delete_form" class="modal">

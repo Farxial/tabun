@@ -1,4 +1,10 @@
 <div class="comments comment-list">
+{assign var="iVoteInfoNeEnableLevel" value=$oConfig->getValue('vote_list.comment.user_required_level')}
+{if $iVoteInfoNeEnableLevel <= 2}
+    {assign var="bVoteInfoEnabled" value=$LS->ACL_CheckSimpleAccessLevel($iVoteInfoNeEnableLevel, $oUserCurrent, null, 'comment')}
+{elseif $iVoteInfoNeEnableLevel >= 6}
+    {assign var="bVoteInfoEnabled" value=true}
+{/if}
 {foreach from=$aComments item=oComment}
     {assign var="oCommentAuthor" value=$oComment->getUser()}
     {assign var="oCommentAuthorLogin" value=$oCommentAuthor->getLogin()}
@@ -11,7 +17,9 @@
     {if $oUserCurrent}
         {assign var="oCommentRating" value=$oComment->getRating()}
         {assign var="oCommentVoteCount" value=$oComment->getCountVote()}
-        {assign var="bVoteInfoEnabled" value=$LS->ACL_CheckSimpleAccessLevel($oConfig->GetValue('vote_state.comment.na_enable_level'), $oUserCurrent, $oComment, 'comment')}
+        {if $iVoteInfoNeEnableLevel > 2 and $iVoteInfoNeEnableLevel < 6}
+            {assign var="bVoteInfoEnabled" value=$LS->ACL_CheckSimpleAccessLevel($iVoteInfoNeEnableLevel, $oUserCurrent, $oComment, 'comment')}
+        {/if}
     {/if}
 
     <section class="comment">

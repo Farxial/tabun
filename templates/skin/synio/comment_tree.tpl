@@ -8,7 +8,7 @@
 {else}
 	{assign var="bAllowUserToEditBlogComments" value=false}
 {/if}
-{assign var="iVoteInfoNeEnableLevel" value=$oConfig->getValue('vote_state.comment.na_enable_level')}
+{assign var="iVoteInfoNeEnableLevel" value=$oConfig->getValue('vote_list.comment.user_required_level')}
 {if $oUserCurrent and $iVoteInfoNeEnableLevel != 5}
 	{* Кэширование допустимо только если все комменты дерева относятся к одной области видимости. *}
 	{assign var="bVoteInfoEnabledForTopic" value=$LS->ACL_CheckSimpleAccessLevel($iVoteInfoNeEnableLevel, $oUserCurrent, $oTopic, 'comment', true)}
