@@ -1,6 +1,9 @@
 <?php
 
 
-class BlockSidetop extends Block {
-    public function Exec() {}
+class BlockSidetop extends Block
+{
+    public function Exec()
+    {
+    }
 }

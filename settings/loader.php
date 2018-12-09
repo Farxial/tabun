@@ -47,8 +47,3 @@ if (file_exists($local_config)) {
     Config::LoadFromFile($local_config, false);
 }
 
-/**
- * Composer libs
- */
-$composer_dir = @$_SERVER["COMPOSER_DIR"];
-require_once($composer_dir . "/vendor/autoload.php");

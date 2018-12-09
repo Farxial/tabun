@@ -80,6 +80,7 @@ class ModuleCache extends Module
      * @var array
      */
     protected $aStoreLife = [];
+
     /**
      * Инициализируем нужный тип кеша
      *

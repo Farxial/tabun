@@ -30,51 +30,52 @@
  * @package engine.modules.validate
  * @since 1.0
  */
-class ModuleValidate_EntityValidatorDate extends ModuleValidate_EntityValidator {
-	/**
-	 * Формат допустимой даты, может содержать список форматов в массиве
-	 *
-	 * @var string|array
-	 */
-	public $format='dd-MM-yyyy';
-	/**
-	 * Допускать или нет пустое значение
-	 *
-	 * @var bool
-	 */
-	public $allowEmpty=true;
+class ModuleValidate_EntityValidatorDate extends ModuleValidate_EntityValidator
+{
+    /**
+     * Формат допустимой даты, может содержать список форматов в массиве
+     *
+     * @var string|array
+     */
+    public $format = 'dd-MM-yyyy';
+    /**
+     * Допускать или нет пустое значение
+     *
+     * @var bool
+     */
+    public $allowEmpty = true;
 
-	/**
-	 * Запуск валидации
-	 *
-	 * @param mixed $sValue	Данные для валидации
-	 *
-	 * @return bool|string
-	 */
-	public function validate($sValue) {
-		if (is_array($sValue)) {
-			return $this->getMessage($this->Lang_Get('validate_date_format_invalid',null,false),'msg');
-		}
-		if($this->allowEmpty && $this->isEmpty($sValue)) {
-			return true;
-		}
+    /**
+     * Запуск валидации
+     *
+     * @param mixed $sValue Данные для валидации
+     *
+     * @return bool|string
+     */
+    public function validate($sValue)
+    {
+        if (is_array($sValue)) {
+            return $this->getMessage($this->Lang_Get('validate_date_format_invalid', null, false), 'msg');
+        }
+        if ($this->allowEmpty && $this->isEmpty($sValue)) {
+            return true;
+        }
 
-		require_once(Config::Get('path.root.engine').'/lib/external/DateTime/DateTimeParser.php');
+        require_once(Config::Get('path.root.engine') . '/lib/external/DateTime/DateTimeParser.php');
 
-		$aFormats=is_string($this->format) ? array($this->format) : $this->format;
-		$bValid=false;
-		foreach($aFormats as $sFormat) {
-			$iTimestamp=DateTimeParser::parse($sValue,$sFormat,array('month'=>1,'day'=>1,'hour'=>0,'minute'=>0,'second'=>0));
-			if($iTimestamp!==false) {
-				$bValid=true;
-				break;
-			}
-		}
+        $aFormats = is_string($this->format) ? [$this->format] : $this->format;
+        $bValid = false;
+        foreach ($aFormats as $sFormat) {
+            $iTimestamp = DateTimeParser::parse($sValue, $sFormat, array('month' => 1, 'day' => 1, 'hour' => 0, 'minute' => 0, 'second' => 0));
+            if ($iTimestamp !== false) {
+                $bValid = true;
+                break;
+            }
+        }
 
-		if(!$bValid) {
-			return $this->getMessage($this->Lang_Get('validate_date_format_invalid',null,false),'msg');
-		}
-		return true;
-	}
+        if (!$bValid) {
+            return $this->getMessage($this->Lang_Get('validate_date_format_invalid', null, false), 'msg');
+        }
+        return true;
+    }
 }
-?>

@@ -1,4 +1,5 @@
 <?php
+
 class BlockBlogInfo extends Block
 {
 

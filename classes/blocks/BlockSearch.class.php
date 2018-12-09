@@ -1,6 +1,9 @@
 <?php
 
 
-class BlockSearch extends Block {
-    public function Exec() {}
+class BlockSearch extends Block
+{
+    public function Exec()
+    {
+    }
 }

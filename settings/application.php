@@ -110,7 +110,7 @@ $config['general']['close'] = false;                                    // ис�
 $config['general']['rss_editor_mail'] = '___sys.mail.from_email___';    // мыло редактора РСС
 $config['general']['reg']['invite'] = false;                            // использовать режим регистрации по приглашению
 $config['general']['reg']['activation'] = true;                         // использовать активацию при регистрации
-$config['general']['prosody']['key'] = 'secretkey';			// ключ для доступа с сервера prosody
+$config['general']['prosody']['key'] = 'secretkey';            // ключ для доступа с сервера prosody
 /**
  * Языковые настройки
  */
@@ -234,7 +234,7 @@ $config['db']['table']['geo_region'] = '___db.table.prefix___geo_region';
 $config['db']['table']['geo_city'] = '___db.table.prefix___geo_city';
 $config['db']['table']['geo_target'] = '___db.table.prefix___geo_target';
 $config['db']['table']['user_changemail'] = '___db.table.prefix___user_changemail';
-$config['db']['table']['magicrole_block']='___db.table.prefix___magicrule_block';
+$config['db']['table']['magicrole_block'] = '___db.table.prefix___magicrule_block';
 
 $config['db']['tables']['engine'] = 'InnoDB';
 
@@ -275,11 +275,11 @@ $config['sys']['elastic']['hosts'] = [
 ];
 
 /**
- * Разное
+ * Разное @todo: перенести дефиницию этих значений в loader, задавать их относительно ___path.root.server___
  */
 $config['misc']['ga'] = '';
-$config['misc']['ver']['front'] = file_get_contents("/static/frontend.version");
-$config['misc']['ver']['code'] = file_get_contents("/app/backend.version") ?: "dev"; // Just for convenience
+$config['misc']['ver']['front'] = is_readable("/static/frontend.version") ? file_get_contents("/static/frontend.version") : '';
+$config['misc']['ver']['code'] = is_readable("/app/backend.version") ? file_get_contents("/app/backend.version") : "dev";
 $config['misc']['debug'] = false;
 
 // Отключение подсчёта числа страниц для первых страниц ленты комментариев для их ускорения.
@@ -298,8 +298,7 @@ foreach (glob("settings/parts.d/*") as $file) {
     array_pop($name); // Remove extension
 
     $conf = &$config;
-    foreach($name as $pk)
-    {
+    foreach ($name as $pk) {
         $conf = &$conf[$pk];
     }
     $conf = require($file);

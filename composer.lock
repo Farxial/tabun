@@ -4,9 +4,54 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "9595a3a96795b70fa74d11162e1a7f5f",
-    "content-hash": "b571001eaf5a8263d8488f7c69706d77",
+    "content-hash": "ba084608f3457e024a2ab37f1542a253",
     "packages": [
+        {
+            "name": "agelxnash/jevix",
+            "version": "1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/AgelxNash/Jevix.git",
+                "reference": "5165067f12126c0c56e3d20abe548c682120ead9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/AgelxNash/Jevix/zipball/5165067f12126c0c56e3d20abe548c682120ead9",
+                "reference": "5165067f12126c0c56e3d20abe548c682120ead9",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/functions.php"
+                ],
+                "psr-0": {
+                    "Jevix": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Roman Shamritskiy",
+                    "email": "roman@litgroup.ru"
+                },
+                {
+                    "name": "ur001"
+                },
+                {
+                    "name": "livestreet framework"
+                },
+                {
+                    "name": "Bezumkin"
+                },
+                {
+                    "name": "Evgeniy Borisov",
+                    "email": "agel-nash@mail.ru"
+                }
+            ],
+            "description": "Library for html filtering",
+            "time": "2018-10-17T07:34:34+00:00"
+        },
         {
             "name": "elasticsearch/elasticsearch",
             "version": "v2.2.1",
@@ -59,7 +104,7 @@
                 "elasticsearch",
                 "search"
             ],
-            "time": "2016-07-14 14:13:40"
+            "time": "2016-07-14T14:13:40+00:00"
         },
         {
             "name": "guzzlehttp/ringphp",
@@ -110,7 +155,7 @@
                 }
             ],
             "description": "Provides a simple API and specification that abstracts away the details of HTTP into a single PHP function.",
-            "time": "2015-05-20 03:37:09"
+            "time": "2015-05-20T03:37:09+00:00"
         },
         {
             "name": "guzzlehttp/streams",
@@ -160,7 +205,7 @@
                 "Guzzle",
                 "stream"
             ],
-            "time": "2014-10-12 19:18:40"
+            "time": "2014-10-12T19:18:40+00:00"
         },
         {
             "name": "kalaspuff/redis-cache-zend-framework",
@@ -205,7 +250,7 @@
             "support": {
                 "source": "https://github.com/ussignal/redis-cache-zend-framework/tree/master"
             },
-            "time": "2013-10-03 17:52:14"
+            "time": "2013-10-03T17:52:14+00:00"
         },
         {
             "name": "massivescale/celery-php",
@@ -259,7 +304,80 @@
                 "redis",
                 "task"
             ],
-            "time": "2015-07-21 20:26:08"
+            "time": "2015-07-21T20:26:08+00:00"
+        },
+        {
+            "name": "php-amqplib/php-amqplib",
+            "version": "v2.8.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-amqplib/php-amqplib.git",
+                "reference": "84449ffd3f5a7466bbee3946facb3746ff11f075"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-amqplib/php-amqplib/zipball/84449ffd3f5a7466bbee3946facb3746ff11f075",
+                "reference": "84449ffd3f5a7466bbee3946facb3746ff11f075",
+                "shasum": ""
+            },
+            "require": {
+                "ext-bcmath": "*",
+                "ext-sockets": "*",
+                "php": ">=5.4.0"
+            },
+            "replace": {
+                "videlalvaro/php-amqplib": "self.version"
+            },
+            "require-dev": {
+                "phpdocumentor/phpdocumentor": "^2.9",
+                "phpunit/phpunit": "^4.8",
+                "scrutinizer/ocular": "^1.1",
+                "squizlabs/php_codesniffer": "^2.5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.8-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "PhpAmqpLib\\": "PhpAmqpLib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.1-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Alvaro Videla",
+                    "role": "Original Maintainer"
+                },
+                {
+                    "name": "John Kelly",
+                    "email": "johnmkelly86@gmail.com",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "Raúl Araya",
+                    "email": "nubeiro@gmail.com",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "Luke Bakken",
+                    "email": "luke@bakken.io",
+                    "role": "Maintainer"
+                }
+            ],
+            "description": "Formerly videlalvaro/php-amqplib.  This library is a pure PHP implementation of the AMQP protocol. It's been tested against RabbitMQ.",
+            "homepage": "https://github.com/php-amqplib/php-amqplib/",
+            "keywords": [
+                "message",
+                "queue",
+                "rabbitmq"
+            ],
+            "time": "2018-11-13T09:35:17+00:00"
         },
         {
             "name": "predis/predis",
@@ -309,7 +427,7 @@
                 "predis",
                 "redis"
             ],
-            "time": "2016-06-16 16:22:20"
+            "time": "2016-06-16T16:22:20+00:00"
         },
         {
             "name": "psr/log",
@@ -356,7 +474,7 @@
                 "psr",
                 "psr-3"
             ],
-            "time": "2016-09-19 16:02:08"
+            "time": "2016-09-19T16:02:08+00:00"
         },
         {
             "name": "react/promise",
@@ -400,7 +518,7 @@
                 }
             ],
             "description": "A lightweight implementation of CommonJS Promises/A for PHP",
-            "time": "2016-05-03 17:50:52"
+            "time": "2016-05-03T17:50:52+00:00"
         },
         {
             "name": "smarty-gettext/smarty-gettext",
@@ -454,78 +572,7 @@
             ],
             "description": "Gettext plugin enabling internationalization in Smarty Package files",
             "homepage": "https://github.com/smarty-gettext/smarty-gettext",
-            "time": "2016-06-13 10:54:04"
-        },
-        {
-            "name": "videlalvaro/php-amqplib",
-            "version": "v2.6.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/php-amqplib/php-amqplib.git",
-                "reference": "fa2f0d4410a11008cb36b379177291be7ee9e4f6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/php-amqplib/php-amqplib/zipball/fa2f0d4410a11008cb36b379177291be7ee9e4f6",
-                "reference": "fa2f0d4410a11008cb36b379177291be7ee9e4f6",
-                "shasum": ""
-            },
-            "require": {
-                "ext-bcmath": "*",
-                "ext-mbstring": "*",
-                "php": ">=5.3.0"
-            },
-            "replace": {
-                "videlalvaro/php-amqplib": "self.version"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^4.8",
-                "scrutinizer/ocular": "^1.1",
-                "squizlabs/php_codesniffer": "^2.5"
-            },
-            "suggest": {
-                "ext-sockets": "Use AMQPSocketConnection"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.7-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "PhpAmqpLib\\": "PhpAmqpLib/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-2.1"
-            ],
-            "authors": [
-                {
-                    "name": "Alvaro Videla",
-                    "role": "Original Maintainer"
-                },
-                {
-                    "name": "John Kelly",
-                    "email": "johnmkelly86@gmail.com",
-                    "role": "Maintainer"
-                },
-                {
-                    "name": "Raúl Araya",
-                    "email": "nubeiro@gmail.com",
-                    "role": "Maintainer"
-                }
-            ],
-            "description": "Formerly videlalvaro/php-amqplib.  This library is a pure PHP implementation of the AMQP protocol. It's been tested against RabbitMQ.",
-            "homepage": "https://github.com/php-amqplib/php-amqplib/",
-            "keywords": [
-                "message",
-                "queue",
-                "rabbitmq"
-            ],
-            "abandoned": "php-amqplib/php-amqplib",
-            "time": "2016-04-11 14:30:01"
+            "time": "2016-06-13T10:54:04+00:00"
         },
         {
             "name": "xxtea/xxtea",
@@ -576,7 +623,7 @@
                 "security",
                 "xxtea"
             ],
-            "time": "2016-02-13 11:45:07"
+            "time": "2016-02-13T11:45:07+00:00"
         },
         {
             "name": "zendframework/zendframework1",
@@ -623,7 +670,8 @@
                 "ZF1",
                 "framework"
             ],
-            "time": "2016-09-08 14:50:34"
+            "abandoned": "zendframework/zendframework",
+            "time": "2016-09-08T14:50:34+00:00"
         },
         {
             "name": "zf1/zend-cache",
@@ -664,7 +712,7 @@
                 "framework",
                 "zend"
             ],
-            "time": "2015-04-30 11:07:42"
+            "time": "2015-04-30T11:07:42+00:00"
         },
         {
             "name": "zf1/zend-exception",
@@ -701,7 +749,7 @@
                 "framework",
                 "zend"
             ],
-            "time": "2015-04-30 11:10:20"
+            "time": "2015-04-30T11:10:20+00:00"
         }
     ],
     "packages-dev": [],

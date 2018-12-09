@@ -37,9 +37,9 @@ class ModulePage_EntityPage extends EntityORM
             'seo_description',
             'string',
             'allowEmpty' => true,
-            'min'        => 1,
-            'max'        => 500,
-            'label'      => 'SEO Description'
+            'min' => 1,
+            'max' => 500,
+            'label' => 'SEO Description'
         ),
         array('sort', 'sort_check'),
         array('active', 'active_check'),
@@ -58,44 +58,6 @@ class ModulePage_EntityPage extends EntityORM
     public function _getTreeParentKey()
     {
         return 'pid';
-    }
-
-    /**
-     * Метод автоматически выполняется перед сохранением объекта сущности (статьи)
-     *
-     * @return bool
-     */
-    protected function beforeSave()
-    {
-        /**
-         * Если статья новая, то устанавливаем дату создания
-         */
-        if ($this->_isNew()) {
-            $this->setDateAdd(date("Y-m-d H:i:s"));
-        } else {
-            $this->setDateEdit(date("Y-m-d H:i:s"));
-        }
-        return true;
-    }
-
-    /**
-     * Выполняется перед удалением
-     *
-     * @return bool
-     */
-    protected function beforeDelete()
-    {
-        if ($bResult = parent::beforeDelete()) {
-            /**
-             * Запускаем удаление дочерних страниц
-             */
-            if ($aCildren = $this->getChildren()) {
-                foreach ($aCildren as $oChildren) {
-                    $oChildren->Delete();
-                }
-            }
-        }
-        return $bResult;
     }
 
     /**
@@ -142,7 +104,6 @@ class ModulePage_EntityPage extends EntityORM
         return true;
     }
 
-
     /**
      * Проверка флага активности
      *
@@ -187,5 +148,43 @@ class ModulePage_EntityPage extends EntityORM
     public function getAdminEditWebUrl()
     {
         return Router::GetPath('admin/plugin') . Plugin::GetPluginCode($this) . "/update/{$this->getId()}/";
+    }
+
+    /**
+     * Метод автоматически выполняется перед сохранением объекта сущности (статьи)
+     *
+     * @return bool
+     */
+    protected function beforeSave()
+    {
+        /**
+         * Если статья новая, то устанавливаем дату создания
+         */
+        if ($this->_isNew()) {
+            $this->setDateAdd(date("Y-m-d H:i:s"));
+        } else {
+            $this->setDateEdit(date("Y-m-d H:i:s"));
+        }
+        return true;
+    }
+
+    /**
+     * Выполняется перед удалением
+     *
+     * @return bool
+     */
+    protected function beforeDelete()
+    {
+        if ($bResult = parent::beforeDelete()) {
+            /**
+             * Запускаем удаление дочерних страниц
+             */
+            if ($aCildren = $this->getChildren()) {
+                foreach ($aCildren as $oChildren) {
+                    $oChildren->Delete();
+                }
+            }
+        }
+        return $bResult;
     }
 }

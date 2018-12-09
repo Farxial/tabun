@@ -21,7 +21,7 @@
  * @package engine
  * @since 1.0
  */
-abstract class LsObject {
+abstract class LsObject
+{
 
 }
-?>

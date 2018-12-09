@@ -21,23 +21,25 @@
  * @package engine.modules.validate
  * @since 1.0
  */
-class ModuleValidate_EntityValidatorRecaptcha extends ModuleValidate_EntityValidator {
+class ModuleValidate_EntityValidatorRecaptcha extends ModuleValidate_EntityValidator
+{
     /**
      * Запуск валидации
      *
-     * @param mixed $sValue	Данные для валидации
+     * @param mixed $sValue Данные для валидации
      *
      * @return bool|string
      */
-    public function validate($sValue) {
+    public function validate($sValue)
+    {
         $secret = Config::Get('recaptcha.secret');
         $url = Config::Get('recaptcha.url');
-        $q = "?secret=".$secret."&response=".$sValue;
+        $q = "?secret=" . $secret . "&response=" . $sValue;
         $result = gettext('recaptcha_error');
 
         $ch = curl_init();
 
-        curl_setopt($ch, CURLOPT_URL, $url.$q);
+        curl_setopt($ch, CURLOPT_URL, $url . $q);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
         if (!curl_errno($ch)) {
@@ -57,4 +59,3 @@ class ModuleValidate_EntityValidatorRecaptcha extends ModuleValidate_EntityValid
         return $result;
     }
 }
-?>

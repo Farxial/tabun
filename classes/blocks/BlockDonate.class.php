@@ -1,6 +1,9 @@
 <?php
 
 
-class BlockDonate extends Block {
-    public function Exec() {}
+class BlockDonate extends Block
+{
+    public function Exec()
+    {
+    }
 }
