@@ -680,7 +680,7 @@ class ModuleACL extends Module
             if ($oUser->isAdministrator()) {
                 return true;
             }
-            if ($req >= 2) {
+            if ($req >= 3) {
                 switch ($sTargetType) {
                     case 'comment':
                         if ($bCheckForTopicOfComment) {
