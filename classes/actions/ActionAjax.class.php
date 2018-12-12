@@ -1464,7 +1464,7 @@ class ActionAjax extends Action
                 'voterName' => $bShowUser ? $oUser->getLogin() : null,
                 'voterAvatar' => $bShowUser ? $oUser->getProfileAvatarPath() : null,
                 'value' => (float) $oVote->getValue(),
-                'date' => (string) $oVote->getDate().'+03:00',
+                'date' => date('c', strtotime($oVote->getDate())),
             ];
         }
         if ($dateSortMode == SORT_ASC) {
