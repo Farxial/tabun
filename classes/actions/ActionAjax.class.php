@@ -1467,23 +1467,16 @@ class ActionAjax extends Action
                 'date' => (string) $oVote->getDate().'+03:00',
             ];
         }
-        usort($aResult, $dateSortMode==SORT_ASC?'_gov_s_date_asc':'_gov_s_date_desc');
+        if ($dateSortMode == SORT_ASC) {
+            $sorter = function($a, $b) {
+                return strtotime($a['date']) - strtotime($b['date']);
+            };
+        } else {
+            $sorter = function($a, $b) {
+                return strtotime($b['date']) - strtotime($a['date']);
+            };
+        }
+        usort($aResult, $sorter);
         $this->Viewer_AssignAjax('aVotes', $aResult);
     }
-}
-function _gov_s_date_asc($a, $b)
-{
-    $a_time = strtotime($a['date']);
-    $b_time = strtotime($b['date']);
-    if ($a_time > $b_time) {
-        return 1;
-    }
-    if ($a_time < $b_time) {
-        return -1;
-    }
-    return 0;
-}
-function _gov_s_date_desc($a, $b)
-{
-    return -_gov_s_date_asc($a, $b);
 }
