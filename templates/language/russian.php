@@ -1198,9 +1198,9 @@ return array(
 	'commentEditNotice_byAdmin' => 'администратором',
 	'commentEditNotice_afterAnswer' => 'после ответа',
 	'commentEditNotice_withLocked' => 'и заблокирован для изменения',
-	'commentEditNotice_descChanged_byAuthor' => 'Последнее изменение – автором %%date%%',
-	'commentEditNotice_descChanged_byAdminFull' => 'Последнее изменение – адм. %%user%% %%date%%',
-	'commentEditNotice_descLocked_byAdminFull' => 'Заблокирован для изменения адм. %%user%% %%date%%',
+	'commentEditNotice_descChanged_byAuthor' => 'Последнее изменение – %%date%%',
+	'commentEditNotice_descChanged_byAdminFull' => 'Последнее изменение – %%date%% адм. %%user%%',
+	'commentEditNotice_descLocked_byAdminFull' => 'Заблокирован для изменения %%date%% адм. %%user%%',
 
 	'check_rule_action_error' => 'Вам не разрешено данное действие',
 );
