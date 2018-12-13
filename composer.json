@@ -1,22 +1,11 @@
 {
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://github.com/everypony/Jevix"
-    },
-    {
-      "type": "vcs",
-      "url": "https://github.com/ussignal/redis-cache-zend-framework"
-    }
-  ],
   "require": {
-    "agelxnash/jevix": "dev-master#10414d411ba0e4180f655de42018be98aa40936c",
+    "agelxnash/jevix": "1.2.1",
     "smarty-gettext/smarty-gettext": "1.4.0",
-    "zf1/zend-cache": "1.12.11",
+    "everypony/zend-cache-redis": "1.2.0",
     "massivescale/celery-php": "2.1.1",
     "elasticsearch/elasticsearch": "6.0.1",
     "xxtea/xxtea": "1.0.1",
-    "php-amqplib/php-amqplib": "^2.8",
-    "kalaspuff/redis-cache-zend-framework": "dev-master#65bdfa098abde74bc74c9a5d101daec8c9b01a97"
+    "php-amqplib/php-amqplib": "^2.8"
   }
 }

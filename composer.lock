@@ -1,24 +1,27 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4cd634d8c59ab6a44ad0978df8424360",
+    "content-hash": "bfb96ba0f13cda0263af8319010e25aa",
     "packages": [
         {
             "name": "agelxnash/jevix",
-            "version": "dev-master",
+            "version": "1.2.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/everypony/Jevix.git",
-                "reference": "10414d411ba0e4180f655de42018be98aa40936c"
+                "url": "https://github.com/AgelxNash/Jevix.git",
+                "reference": "d796d7ca5ac6f35c461c33c3caad29b608907304"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/everypony/Jevix/zipball/10414d411ba0e4180f655de42018be98aa40936c",
-                "reference": "10414d411ba0e4180f655de42018be98aa40936c",
+                "url": "https://api.github.com/repos/AgelxNash/Jevix/zipball/d796d7ca5ac6f35c461c33c3caad29b608907304",
+                "reference": "d796d7ca5ac6f35c461c33c3caad29b608907304",
                 "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*"
             },
             "type": "library",
             "autoload": {
@@ -29,7 +32,12 @@
                     "Jevix": "src/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "authors": [
+                {
+                    "name": "Roman Shamritskiy",
+                    "email": "roman@litgroup.ru"
+                },
                 {
                     "name": "ur001"
                 },
@@ -40,19 +48,12 @@
                     "name": "Bezumkin"
                 },
                 {
-                    "name": "Roman Shamritskiy",
-                    "email": "roman@litgroup.ru"
-                },
-                {
                     "name": "Evgeniy Borisov",
                     "email": "agel-nash@mail.ru"
                 }
             ],
             "description": "Library for html filtering",
-            "support": {
-                "source": "https://github.com/everypony/Jevix/tree/master"
-            },
-            "time": "2018-12-09T19:38:56+00:00"
+            "time": "2018-12-10T12:56:18+00:00"
         },
         {
             "name": "elasticsearch/elasticsearch",
@@ -110,6 +111,56 @@
                 "search"
             ],
             "time": "2017-12-05T14:15:58+00:00"
+        },
+        {
+            "name": "everypony/zend-cache-redis",
+            "version": "1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/everypony/zend-cache-redis.git",
+                "reference": "c1c0ba0f0156c00cb2c57b5275ce154ff4f4cf91"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/everypony/zend-cache-redis/zipball/c1c0ba0f0156c00cb2c57b5275ce154ff4f4cf91",
+                "reference": "c1c0ba0f0156c00cb2c57b5275ce154ff4f4cf91",
+                "shasum": ""
+            },
+            "require": {
+                "zf1/zend-cache": "^1.12.11"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "."
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "kalaspuff",
+                    "email": "carloscar@agigen.se",
+                    "homepage": "https://github.com/kalaspuff/",
+                    "role": "Developer"
+                },
+                {
+                    "name": "orhideous",
+                    "email": "me@orhideous.name",
+                    "homepage": "https://orhideous.name/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Redis cache backend for Zend Framework",
+            "homepage": "https://github.com/everypony/zend-cache-redis",
+            "keywords": [
+                "cache",
+                "redis",
+                "zend"
+            ],
+            "time": "2018-12-12T18:58:09+00:00"
         },
         {
             "name": "guzzlehttp/ringphp",
@@ -211,51 +262,6 @@
                 "stream"
             ],
             "time": "2014-10-12T19:18:40+00:00"
-        },
-        {
-            "name": "kalaspuff/redis-cache-zend-framework",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ussignal/redis-cache-zend-framework.git",
-                "reference": "65bdfa098abde74bc74c9a5d101daec8c9b01a97"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ussignal/redis-cache-zend-framework/zipball/65bdfa098abde74bc74c9a5d101daec8c9b01a97",
-                "reference": "65bdfa098abde74bc74c9a5d101daec8c9b01a97",
-                "shasum": ""
-            },
-            "require": {
-                "zendframework/zendframework1": ">=1.12.1"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "."
-                ]
-            },
-            "license": [
-                "New BSD"
-            ],
-            "authors": [
-                {
-                    "name": "kalaspuff",
-                    "email": "carloscar@agigen.se",
-                    "homepage": "https://github.com/kalaspuff/",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Redis cache backend for Zend Framework",
-            "homepage": "https://github.com/kalaspuff/redis-cache-zend-framework",
-            "keywords": [
-                "redis",
-                "zend"
-            ],
-            "support": {
-                "source": "https://github.com/ussignal/redis-cache-zend-framework/tree/master"
-            },
-            "time": "2013-10-03T17:52:14+00:00"
         },
         {
             "name": "massivescale/celery-php",
@@ -633,56 +639,8 @@
             "time": "2016-02-13T11:45:07+00:00"
         },
         {
-            "name": "zendframework/zendframework1",
-            "version": "1.12.20",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/zendframework/zf1.git",
-                "reference": "737ef159654fbbef37cf9af742b2c8f9690c2ece"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/zendframework/zf1/zipball/737ef159654fbbef37cf9af742b2c8f9690c2ece",
-                "reference": "737ef159654fbbef37cf9af742b2c8f9690c2ece",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.2.11"
-            },
-            "require-dev": {
-                "phpunit/dbunit": "1.3.*",
-                "phpunit/phpunit": "3.7.*"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.12.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Zend_": "library/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "include-path": [
-                "library/"
-            ],
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "description": "Zend Framework 1",
-            "homepage": "http://framework.zend.com/",
-            "keywords": [
-                "ZF1",
-                "framework"
-            ],
-            "abandoned": "zendframework/zendframework",
-            "time": "2016-09-08T14:50:34+00:00"
-        },
-        {
             "name": "zf1/zend-cache",
-            "version": "1.12.11",
+            "version": "1.12.20",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zf1/zend-cache.git",
@@ -723,7 +681,7 @@
         },
         {
             "name": "zf1/zend-exception",
-            "version": "1.12.11",
+            "version": "1.12.20",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zf1/zend-exception.git",
@@ -762,10 +720,7 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "agelxnash/jevix": 20,
-        "kalaspuff/redis-cache-zend-framework": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
