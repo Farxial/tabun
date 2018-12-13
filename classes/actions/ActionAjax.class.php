@@ -1455,11 +1455,13 @@ class ActionAjax extends Action
             return;
         }
         
+        $bSuperuserAccessGranted = $this->ACL_CheckSimpleAccessLevel($superuserRequiredLevel, $this->oUserCurrent, $oTarget, $targetType);
+        
         $aVotes = $this->Vote_SimpleGetVoteByOneTarget($targetId, $targetType);
         $aResult = [];
         foreach ($aVotes as $oVote) {
             $oUser = $this->User_GetUserById($oVote->getVoterId());
-            $bShowUser = $oUser && (strtotime($oVote->getDate()) > $exposeFromDate || $this->ACL_CheckSimpleAccessLevel($superuserRequiredLevel, $this->oUserCurrent, $oTarget, $targetType));
+            $bShowUser = $oUser && (strtotime($oVote->getDate()) > $exposeFromDate || $bSuperuserAccessGranted);
             $aResult[] = [
                 'voterName' => $bShowUser ? $oUser->getLogin() : null,
                 'voterAvatar' => $bShowUser ? $oUser->getProfileAvatarPath() : null,
