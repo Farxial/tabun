@@ -4,22 +4,18 @@
 {assign var="isLocked" value=($flags & ModuleComment_EntityComment::FLAG_LOCK_MODIFY) !== 0}
 {strip}
 {if $isModified or $isLocked}
-	{assign var="label" value=""}
 	{assign var="title" value=""}
 	{assign var="desc" value=""}
 	{if $isModified}
-		{assign var="label" value="$label`$aLang.commentEditNotice_flagChanged`"}
 		{assign var="title" value=$aLang.commentEditNotice_capitalChanged}
 		{assign var="editorId" value=$oComment->getLastModifyUserId()}
 		{assign var="isSelfModified" value=$editorId == $oComment->getUserId()}
-		{if $isSelfModified and not $isHardModified}
-			{assign var="title" value="$title `$aLang.commentEditNotice_byAuthor`"}
-		{else}
-			{assign var="label" value="$label`$aLang.commentEditNotice_flagByAdmin`"}
+		{if $isHardModified or not $isSelfModified}
 			{assign var="title" value="$title `$aLang.commentEditNotice_byAdmin`"}
+		{else}
+			{assign var="title" value="$title `$aLang.commentEditNotice_byAuthor`"}
 		{/if}
 		{if $isHardModified}
-			{assign var="label" value="$label`$aLang.commentEditNotice_flagAfterAnswer`"}
 			{assign var="title" value="$title `$aLang.commentEditNotice_afterAnswer`"}
 		{/if}
 		{if $isSelfModified}
@@ -34,7 +30,6 @@
 		{assign var="lastModifyId" value="0"}
 	{/if}
 	{if $isLocked}
-		{assign var="label" value="$label`$aLang.commentEditNotice_flagLocked`"}
 		{if $isModified}
 			{assign var="title" value="$title `$aLang.commentEditNotice_withLocked`"}
 			{assign var="desc" value="$desc\n"}
@@ -47,6 +42,11 @@
 		{assign var="desc" value="$desc`$LS->Lang_Get('commentEditNotice_descLocked_byAdminFull', ['user' => $lockerName,'date' => {date_format date=$oComment->getLockModifyDate() format="j F Y, H:i:s"}])`"}
 	{/if}
 	{assign var="desc" value="$title\n$desc"}
-	<span class="modify-notice" data-locked="{if $isLocked}1{else}0{/if}" data-last-modify-id="{$lastModifyId}" title="{$desc|escape:"html"}">{$label}</span>
+	<span class="modify-notice" data-locked="{if $isLocked}1{else}0{/if}" data-last-modify-id="{$lastModifyId}" title="{$desc|escape:"html"}">
+	{if $isModified}<i class="fa fa-edit"></i>{/if}
+	{if $isHardModified or not $isSelfModified}<i class="fa fa-user-cog"></i>{/if}
+	{if $isHardModified}<i class="fa fa-stream"></i>{/if}
+	{if $isLocked}<i class="fa fa-lock"></i>{/if}
+	</span>
 {/if}
 {/strip}
