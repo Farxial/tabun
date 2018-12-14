@@ -1455,30 +1455,29 @@ class ActionAjax extends Action
             return;
         }
         
-        $bSuperuserAccessGranted = $this->ACL_CheckSimpleAccessLevel($iSuperuserRequiredLevel, $this->oUserCurrent, $oTarget, $sTargetType);
-        
         $aVotes = $this->Vote_SimpleGetVoteByOneTarget($iTargetId, $sTargetType);
-        $aResult = [];
-        foreach ($aVotes as $oVote) {
-            $oUser = $this->User_GetUserById($oVote->getVoterId());
-            $bShowUser = $oUser && (strtotime($oVote->getDate()) > $iExposeFromDate || $bSuperuserAccessGranted);
-            $aResult[] = [
-                'voterName' => $bShowUser ? $oUser->getLogin() : null,
-                'voterAvatar' => $bShowUser ? $oUser->getProfileAvatarPath() : null,
-                'value' => (float) $oVote->getValue(),
-                'date' => date('c', strtotime($oVote->getDate())),
-            ];
-        }
         if ($iDateSortMode == SORT_ASC) {
             $sorter = function($a, $b) {
-                return strtotime($a['date']) - strtotime($b['date']);
+                return strtotime($a->getDate()) - strtotime($b->getDate());
             };
         } else {
             $sorter = function($a, $b) {
-                return strtotime($b['date']) - strtotime($a['date']);
+                return strtotime($b->getDate()) - strtotime($a->getDate());
             };
         }
-        usort($aResult, $sorter);
-        $this->Viewer_AssignAjax('aVotes', $aResult);
+        usort($aVotes, $sorter);
+        
+        $fVoteSum = 0.0;
+        foreach ($aVotes as $oVote) {
+            $fVoteSum += (float) $oVote->getValue();
+        }
+        
+        $this->Viewer_Assign('LS', $this);
+        $this->Viewer_Assign('aVotes', $aVotes);
+        $this->Viewer_Assign('iExposeFromDate', $iExposeFromDate);
+        $this->Viewer_Assign('bSuperuserAccessGranted', $this->ACL_CheckSimpleAccessLevel($iSuperuserRequiredLevel, $this->oUserCurrent, $oTarget, $sTargetType));
+        $this->Viewer_AssignAjax('sHtmlVoteList', $this->Viewer_Fetch('vote_list.tpl'));
+        $this->Viewer_AssignAjax('iVoteCount', count($aVotes));
+        $this->Viewer_AssignAjax('fVoteSum', $fVoteSum);
     }
 }

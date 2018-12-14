@@ -99,50 +99,11 @@ onGetVotes = (result) ->
   if result.bStateError
     error null, result.sMsg
   else
-    voteSum = 0
-    if result.aVotes.length > 0
-      vl = document.createElement "div"
-      vl.className = "vote-list"
-      for i in [0...result.aVotes.length]
-        vote = result.aVotes[i]
-        voteSum += vote.value
-        line = document.createElement "div"
-        line.className = "vote-list-item"
-        profileLink = __makeProfileLink(vote.voterName, {
-          name: vote.voterName,
-          avatar: vote.voterAvatar
-        });
-        profileLink.classList.add "vote-list-item-component"
-        line.appendChild profileLink
-        
-        time = document.createElement "time"
-        time.datetime = vote.date
-        date = new Date(Date.parse(vote.date))
-        now = new Date()
-        timeString = if date.getDate() != now.getDate() or date.getMonth() != now.getMonth() or date.getFullYear() != now.getFullYear() then date.toLocaleString() else date.toLocaleTimeString()
-        time.className = "vote-list-item-component"
-        time.appendChild document.createTextNode(timeString)
-        line.appendChild time
-        
-        voteValue = document.createElement "span"
-        voteValue.dataset.value = if vote.value == 0 then "0" else (if vote.value > 0 then "+" else "−") + Math.abs(vote.value).toString()
-        voteValue.className = "vote-list-item-component vote"
-        line.appendChild voteValue
-        
-        vl.appendChild line
-      
+    if result.iVoteCount > 0
       vl_box = document.createElement "div"
-      vl_box.className = "vote-list-box hidden"
-      vl_box.classList.add "for-"+this.targetType
-      vl_closeButton = document.createElement "a"
-      vl_closeButton.className = "close-button"
-      vl_closeButton.href = "javascript://"
-      vl_closeButton.textContent = lang.gettext "close"
-      vl_wrapper = document.createElement "div"
-      vl_wrapper.className = "vote-list-wrapper"
-      vl_wrapper.appendChild vl
-      vl_box.appendChild vl_closeButton
-      vl_box.appendChild vl_wrapper
+      vl_box.className = "vote-list-box hidden for-"+this.targetType
+      vl_box.innerHTML = result.sHtmlVoteList
+      vl_wrapper = vl_box.querySelector ".vote-list-wrapper"
       this.control.parentNode.parentNode.parentNode.insertBefore vl_box, this.control.parentNode.parentNode.nextSibling
       setTimeout DOMTokenList.prototype.remove.bind(vl_box.classList), 10, "hidden"
       if vl_wrapper.scrollHeight > vl_wrapper.clientHeight
@@ -158,16 +119,16 @@ onGetVotes = (result) ->
     else
       notice null, lang.gettext("no_votes_"+this.targetType)
     
-    if parseInt(this.control.dataset.count) != result.aVotes.length
+    if parseInt(this.control.dataset.count) != result.iVoteCount
       this.control.parentNode.classList.remove "vote-count-negative"
       this.control.parentNode.classList.remove "vote-count-positive"
       this.control.parentNode.classList.remove "vote-count-mixed"
-      if voteSum > 0
-        this.control.textContent = "+" + voteSum.toString()
+      if result.fVoteSum > 0
+        this.control.textContent = "+" + result.fVoteSum.toString()
         this.control.parentNode.classList.add "vote-count-positive"
       else
-        this.control.textContent = voteSum.toString()
-        if voteSum < 0
+        this.control.textContent = result.fVoteSum.toString()
+        if result.fVoteSum < 0
           this.control.parentNode.classList.add "vote-count-negative"
         else
           this.control.parentNode.classList.add "vote-count-mixed"

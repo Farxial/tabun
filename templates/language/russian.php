@@ -1199,4 +1199,6 @@ return array(
 	'commentEditNotice_descLocked_byAdminFull' => 'Заблокирован для изменения адм. %%user%% %%date%%',
 
 	'check_rule_action_error' => 'Вам не разрешено данное действие',
+
+	'close' => 'Закрыть',
 );
