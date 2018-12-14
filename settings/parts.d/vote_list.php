@@ -9,19 +9,19 @@ return [
     ],
     'topic' => [
         'expose_from_date' => 1545339600,   // strtotime('2018-12-21 +03:00')
-        'user_required_level' => 6,
+        'user_required_level' => 1,
         'superuser_required_level' => 1,
         'date_sort_mode' => SORT_ASC,
     ],
     'blog' => [
         'expose_from_date' => 1545339600,   // strtotime('2018-12-21 +03:00')
-        'user_required_level' => 6,
+        'user_required_level' => 1,
         'superuser_required_level' => 1,
         'date_sort_mode' => SORT_DESC,
     ],
     'user' => [
         'expose_from_date' => 1545339600,   // strtotime('2018-12-21 +03:00')
-        'user_required_level' => 6,
+        'user_required_level' => 1,
         'superuser_required_level' => 1,
         'date_sort_mode' => SORT_DESC,
     ],
