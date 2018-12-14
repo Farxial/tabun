@@ -23,7 +23,7 @@
         <div class="comment-content">
             <div class="text">{$oComment->getText()}</div>
         </div>
-        <div class="comment-info" data-id="{$oCommentId}">
+        <div class="comment-info{if $bVoteInfoEnabled} vote-info-enabled{/if}" data-id="{$oCommentId}">
             <a href="/profile/{$oCommentAuthorLogin}">
                 <img src="{$oCommentAuthor->getProfileAvatarPath(24)}"  class="comment-avatar"/>
             </a>
@@ -60,7 +60,7 @@
                         {else} vote-count-mixed
                         {/if}
                     {/if}
-                    {if $bVoteInfoEnabled} vote-info-enabled{/if}">
+                    ">
                     <span class="vote-count" id="vote_total_comment_{$oCommentId}" data-target_id="{$oCommentId}" data-target_type="comment" data-count="{$oCommentVoteCount}">{$oCommentRating}</span>
                 </div>
                 {/if}
