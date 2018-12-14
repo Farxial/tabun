@@ -1411,33 +1411,33 @@ class ActionAjax extends Action
     
     protected function EventGetObjectVotes()
     {
-        $targetType = getRequestStr('targetType', null, 'post');
-        $targetId = (int) getRequestStr('targetId', null, 'post');
-        switch ($targetType) {
+        $sTargetType = getRequestStr('targetType', null, 'post');
+        $iTargetId = (int) getRequestStr('targetId', null, 'post');
+        switch ($sTargetType) {
             case 'comment':
-                $oTarget = $this->Comment_GetCommentById($targetId);
+                $oTarget = $this->Comment_GetCommentById($iTargetId);
                 break;
             case 'topic':
-                $oTarget = $this->Topic_GetTopicById($targetId);
+                $oTarget = $this->Topic_GetTopicById($iTargetId);
                 break;
             case 'blog':
-                $oTarget = $this->Blog_GetBlogById($targetId);
+                $oTarget = $this->Blog_GetBlogById($iTargetId);
                 break;
             case 'user':
-                $oTarget = $this->User_GetUserById($targetId);
+                $oTarget = $this->User_GetUserById($iTargetId);
                 break;
             default:
                 $this->Message_AddErrorSingle($this->Lang_Get('system_error'), $this->Lang_Get('error'));
                 return;
         }
-        $userRequiredLevel = Config::Get('vote_list.'.$targetType.'.user_required_level');
-        $superuserRequiredLevel = Config::Get('vote_list.'.$targetType.'.superuser_required_level');
-        $exposeFromDate = Config::Get('vote_list.'.$targetType.'.expose_from_date');
-        $dateSortMode = Config::Get('vote_list.'.$targetType.'.date_sort_mode');
+        $iUserRequiredLevel = Config::Get('vote_list.'.$sTargetType.'.user_required_level');
+        $iSuperuserRequiredLevel = Config::Get('vote_list.'.$sTargetType.'.superuser_required_level');
+        $iExposeFromDate = Config::Get('vote_list.'.$sTargetType.'.expose_from_date');
+        $iDateSortMode = Config::Get('vote_list.'.$sTargetType.'.date_sort_mode');
         /**
          * Пользователь авторизован?
          */
-        if (!$this->oUserCurrent && $userRequiredLevel < 8) {
+        if (!$this->oUserCurrent && $iUserRequiredLevel < 8) {
             $this->Message_AddErrorSingle($this->Lang_Get('need_authorization'), $this->Lang_Get('error'));
             return;
         }
@@ -1450,18 +1450,18 @@ class ActionAjax extends Action
             return;
         }
         
-        if (!$this->ACL_CheckSimpleAccessLevel($userRequiredLevel, $this->oUserCurrent, $oTarget, $targetType)) {
+        if (!$this->ACL_CheckSimpleAccessLevel($iUserRequiredLevel, $this->oUserCurrent, $oTarget, $sTargetType)) {
             $this->Message_AddErrorSingle($this->Lang_Get('not_access'), $this->Lang_Get('error'));
             return;
         }
         
-        $bSuperuserAccessGranted = $this->ACL_CheckSimpleAccessLevel($superuserRequiredLevel, $this->oUserCurrent, $oTarget, $targetType);
+        $bSuperuserAccessGranted = $this->ACL_CheckSimpleAccessLevel($iSuperuserRequiredLevel, $this->oUserCurrent, $oTarget, $sTargetType);
         
-        $aVotes = $this->Vote_SimpleGetVoteByOneTarget($targetId, $targetType);
+        $aVotes = $this->Vote_SimpleGetVoteByOneTarget($iTargetId, $sTargetType);
         $aResult = [];
         foreach ($aVotes as $oVote) {
             $oUser = $this->User_GetUserById($oVote->getVoterId());
-            $bShowUser = $oUser && (strtotime($oVote->getDate()) > $exposeFromDate || $bSuperuserAccessGranted);
+            $bShowUser = $oUser && (strtotime($oVote->getDate()) > $iExposeFromDate || $bSuperuserAccessGranted);
             $aResult[] = [
                 'voterName' => $bShowUser ? $oUser->getLogin() : null,
                 'voterAvatar' => $bShowUser ? $oUser->getProfileAvatarPath() : null,
@@ -1469,7 +1469,7 @@ class ActionAjax extends Action
                 'date' => date('c', strtotime($oVote->getDate())),
             ];
         }
-        if ($dateSortMode == SORT_ASC) {
+        if ($iDateSortMode == SORT_ASC) {
             $sorter = function($a, $b) {
                 return strtotime($a['date']) - strtotime($b['date']);
             };
