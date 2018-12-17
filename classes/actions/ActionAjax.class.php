@@ -1430,15 +1430,12 @@ class ActionAjax extends Action
                 $this->Message_AddErrorSingle($this->Lang_Get('system_error'), $this->Lang_Get('error'));
                 return;
         }
-        $iUserRequiredLevel = Config::Get('vote_list.'.$sTargetType.'.user_required_level');
-        $iSuperuserRequiredLevel = Config::Get('vote_list.'.$sTargetType.'.superuser_required_level');
         $iExposeFromDate = Config::Get('vote_list.'.$sTargetType.'.expose_from_date');
         $iDateSortMode = Config::Get('vote_list.'.$sTargetType.'.date_sort_mode');
-        /**
-         * Пользователь авторизован?
-         */
-        if (!$this->oUserCurrent && $iUserRequiredLevel < 8) {
-            $this->Message_AddErrorSingle($this->Lang_Get('need_authorization'), $this->Lang_Get('error'));
+        
+        // Предварительная проверка на статус функции и уровень и рейтинг пользователя
+        if (!$this->ACL_VoteListCheckAccess($this->oUserCurrent, true, $sTargetType, false)) {
+            $this->Message_AddErrorSingle($this->Lang_Get('not_access'), $this->Lang_Get('error'));
             return;
         }
         
@@ -1450,12 +1447,14 @@ class ActionAjax extends Action
             return;
         }
         
-        if (!$this->ACL_CheckSimpleAccessLevel($iUserRequiredLevel, $this->oUserCurrent, $oTarget, $sTargetType)) {
+        $bUserAccessGranted = $this->ACL_VoteListCheckAccess($this->oUserCurrent, $oTarget, $sTargetType, false);
+        
+        if (!$bUserAccessGranted) {
             $this->Message_AddErrorSingle($this->Lang_Get('not_access'), $this->Lang_Get('error'));
             return;
         }
         
-        $bSuperuserAccessGranted = $this->ACL_CheckSimpleAccessLevel($iSuperuserRequiredLevel, $this->oUserCurrent, $oTarget, $sTargetType);
+        $bSuperuserAccessGranted = $this->ACL_VoteListCheckAccess($this->oUserCurrent, $oTarget, $sTargetType, true);
         
         $aVotes = $this->Vote_SimpleGetVoteByOneTarget($iTargetId, $sTargetType);
         $aResult = [];
