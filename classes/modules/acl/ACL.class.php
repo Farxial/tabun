@@ -764,8 +764,21 @@ class ModuleACL extends Module
         
         if ($bRequireSuperuser) {
             $iUserRequiredLevel = Config::Get('vote_list.'.$sTargetType.'.superuser_required_level');
+            $fUserRequiredRating = Config::Get('vote_list.'.$sTargetType.'.superuser_required_rating');
         } else {
             $iUserRequiredLevel = Config::Get('vote_list.'.$sTargetType.'.user_required_level');
+            $fUserRequiredRating = Config::Get('vote_list.'.$sTargetType.'.user_required_rating');
+        }
+        
+        if ($oUser) {
+            $fUserRating = $oUser->getRating();
+        } else {
+            $fUserRating = 0.0;
+        }
+        
+        if ($fUserRating < $fUserRequiredRating) {
+            // Deny:
+            return false;
         }
         
         switch ($iUserRequiredLevel) {

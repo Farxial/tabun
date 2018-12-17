@@ -5,28 +5,36 @@ return [
         'enable' => true,
         'expose_from_date' => 1545339600,   // strtotime('2018-12-21 +03:00')
         'user_required_level' => 6,
+        'user_required_rating' => +20.0,
         'superuser_required_level' => 1,
+        'superuser_required_rating' => +20.0,
         'date_sort_mode' => SORT_ASC,
     ],
     'topic' => [
         'enable' => true,
         'expose_from_date' => 1545339600,   // strtotime('2018-12-21 +03:00')
         'user_required_level' => 6,
+        'user_required_rating' => +20.0,
         'superuser_required_level' => 1,
+        'superuser_required_rating' => +20.0,
         'date_sort_mode' => SORT_ASC,
     ],
     'blog' => [
         'enable' => true,
         'expose_from_date' => 1545339600,   // strtotime('2018-12-21 +03:00')
         'user_required_level' => 6,
+        'user_required_rating' => +20.0,
         'superuser_required_level' => 1,
+        'superuser_required_rating' => +20.0,
         'date_sort_mode' => SORT_DESC,
     ],
     'user' => [
         'enable' => true,
         'expose_from_date' => 1545339600,   // strtotime('2018-12-21 +03:00')
         'user_required_level' => 6,
+        'user_required_rating' => +20.0,
         'superuser_required_level' => 1,
+        'superuser_required_rating' => +20.0,
         'date_sort_mode' => SORT_DESC,
     ],
 ];
@@ -52,4 +60,8 @@ return [
 //     1   - Любой посетитель, имеющий доступ к объекту на чтение
 //     2   - Любой авторизованный пользователь, имеющий доступ к объекту на чтение
 //     128 - Администратор сайта
+// user_required_rating        — Требуемый рейтинг* пользователя для просмотра открытых голосов, а также просто запроса списка
+// superuser_required_rating   — Требуемый рейтинг* пользователя для просмотра скрытых голосов
+// * Рейтинг не проверяется, если (*_required_level == 128 && пользователь администратор сайта).
+//   Для всех неавторизованных посетителей рейтинг считается равным 0.0.
 // См. также ModuleACL::VoteListCheckAccess
