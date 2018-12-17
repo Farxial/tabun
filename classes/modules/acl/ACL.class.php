@@ -756,12 +756,6 @@ class ModuleACL extends Module
     // oTarget — Объект, к которому нужно проверить доступ при единичном запросе, ИЛИ true, если известно, что доступ к объекту уже есть
     public function VoteListCheckAccess($oUser, $oTarget, $sTargetType)
     {
-        if (!$oUser) {
-            // В текущей реализации доступ разрешён только авторизованным пользователям
-            // Deny:
-            return false;
-        }
-        
         $bEnable = Config::Get('vote_list.'.$sTargetType.'.enable');
         if (!$bEnable) {
             // Deny:
@@ -772,9 +766,16 @@ class ModuleACL extends Module
         switch ($iUserRequiredLevel) {
             case 128:
                 // Allow|Deny:
-                return $oUser->isAdministrator();
+                return $oUser && $oUser->isAdministrator();
             case 2:
-                if ($oUser->isAdministrator()) {
+                if (!$oUser) {
+                    // Deny:
+                    return false;
+                }
+                // fall-through
+                // Если пользователь авторизован, то дальше проверяем остальные права на доступ, но проверяя на предмет авторизации в нужных местах
+            case 1:
+                if ($oUser && $oUser->isAdministrator()) {
                     // Allow:
                     return true;
                 }
@@ -809,30 +810,34 @@ class ModuleACL extends Module
                     if (!isset($oBlog) && $oTopic) {
                         $oBlog = $oTopic->getBlog();
                     }
-                    if ($oBlog->getOwnerId() == $oUser->getId()) {
+                    if ($oUser && $oBlog->getOwnerId() == $oUser->getId()) {
                         // Allow:
                         return true;
                     }
                     $bAllowBansInOpenBlogs = true;
                     if (in_array($oBlog->getType(), ['open', 'personal'])) {
                         if ($bAllowBansInOpenBlogs) {
-                            $oBlogUser = $this->Blog_GetBlogUserByBlogIdAndUserId($oBlog->getId(), $oUser->getId());
-                            if ($oBlogUser && $oBlogUser->getUserRole() == ModuleBlog::BLOG_USER_ROLE_BAN) {
-                                // Deny:
-                                return false;
-                            } else {
-                                // Allow:
-                                return true;
+                            if ($oUser) {
+                                $oBlogUser = $this->Blog_GetBlogUserByBlogIdAndUserId($oBlog->getId(), $oUser->getId());
+                                if ($oBlogUser && $oBlogUser->getUserRole() == ModuleBlog::BLOG_USER_ROLE_BAN) {
+                                    // Deny:
+                                    return false;
+                                } else {
+                                    // Allow:
+                                    return true;
+                                }
                             }
                         } else {
                             // Allow:
                             return true;
                         }
                     } else {
-                        $oBlogUser = $this->Blog_GetBlogUserByBlogIdAndUserId($oBlog->getId(), $oUser->getId());
-                        if ($oBlogUser && $oBlogUser->getUserRole() != ModuleBlog::BLOG_USER_ROLE_BAN) {
-                            // Allow:
-                            return true;
+                        if ($oUser) {
+                            $oBlogUser = $this->Blog_GetBlogUserByBlogIdAndUserId($oBlog->getId(), $oUser->getId());
+                            if ($oBlogUser && $oBlogUser->getUserRole() != ModuleBlog::BLOG_USER_ROLE_BAN) {
+                                // Allow:
+                                return true;
+                            }
                         }
                     }
                 }
