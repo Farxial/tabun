@@ -752,4 +752,93 @@ class ModuleACL extends Module
         }
         return false;
     }
+
+    // oTarget — Объект, к которому нужно проверить доступ при единичном запросе, ИЛИ true, если известно, что доступ к объекту уже есть
+    public function VoteListCheckAccess($oUser, $oTarget, $sTargetType)
+    {
+        if (!$oUser) {
+            // В текущей реализации доступ разрешён только авторизованным пользователям
+            // Deny:
+            return false;
+        }
+        
+        $bEnable = Config::Get('vote_list.'.$sTargetType.'.enable');
+        if (!$bEnable) {
+            // Deny:
+            return false;
+        }
+        
+        $iUserRequiredLevel = Config::Get('vote_list.'.$sTargetType.'.user_required_level');
+        switch ($iUserRequiredLevel) {
+            case 128:
+                // Allow|Deny:
+                return $oUser->isAdministrator();
+            case 2:
+                if ($oUser->isAdministrator()) {
+                    // Allow:
+                    return true;
+                }
+                
+                if ($oTarget === true) {
+                    // Allow:
+                    return true;
+                }
+                
+                switch ($sTargetType) {
+                    case 'comment':
+                        if ($oTarget->getTargetType() === 'topic') {
+                            $oTopic = $oTarget->getTarget();
+                        } elseif ($oTarget->getTargetType() === 'talk') {
+                            // На данный момент невозможно даже оценивать комменты в ЛС
+                            // Deny:
+                            return false;
+                        }
+                        break;
+                    case 'topic':
+                        $oTopic = $oTarget;
+                        break;
+                    case 'blog':
+                        $oBlog = $oTarget;
+                        break;
+                    case 'user':
+                        // Allow:
+                        return true;
+                }
+                
+                if (isset($oTopic) || isset($oBlog)) {
+                    if (!isset($oBlog) && $oTopic) {
+                        $oBlog = $oTopic->getBlog();
+                    }
+                    if ($oBlog->getOwnerId() == $oUser->getId()) {
+                        // Allow:
+                        return true;
+                    }
+                    $bAllowBansInOpenBlogs = true;
+                    if (in_array($oBlog->getType(), ['open', 'personal'])) {
+                        if ($bAllowBansInOpenBlogs) {
+                            $oBlogUser = $this->Blog_GetBlogUserByBlogIdAndUserId($oBlog->getId(), $oUser->getId());
+                            if ($oBlogUser && $oBlogUser->getUserRole() == ModuleBlog::BLOG_USER_ROLE_BAN) {
+                                // Deny:
+                                return false;
+                            } else {
+                                // Allow:
+                                return true;
+                            }
+                        } else {
+                            // Allow:
+                            return true;
+                        }
+                    } else {
+                        $oBlogUser = $this->Blog_GetBlogUserByBlogIdAndUserId($oBlog->getId(), $oUser->getId());
+                        if ($oBlogUser && $oBlogUser->getUserRole() != ModuleBlog::BLOG_USER_ROLE_BAN) {
+                            // Allow:
+                            return true;
+                        }
+                    }
+                }
+                break;
+        }
+        // Deny:
+        return false;
+    }
 }

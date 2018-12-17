@@ -2,30 +2,35 @@
 
 return [
     'comment' => [
+        'enable' => true,
         'expose_from_date' => 1545339600,   // strtotime('2018-12-21 +03:00')
         'user_required_level' => 6,
         'superuser_required_level' => 1,
         'date_sort_mode' => SORT_ASC,
     ],
     'topic' => [
+        'enable' => true,
         'expose_from_date' => 1545339600,   // strtotime('2018-12-21 +03:00')
         'user_required_level' => 6,
         'superuser_required_level' => 1,
         'date_sort_mode' => SORT_ASC,
     ],
     'blog' => [
+        'enable' => true,
         'expose_from_date' => 1545339600,   // strtotime('2018-12-21 +03:00')
         'user_required_level' => 6,
         'superuser_required_level' => 1,
         'date_sort_mode' => SORT_DESC,
     ],
     'user' => [
+        'enable' => true,
         'expose_from_date' => 1545339600,   // strtotime('2018-12-21 +03:00')
         'user_required_level' => 6,
         'superuser_required_level' => 1,
         'date_sort_mode' => SORT_DESC,
     ],
 ];
+// enable                      — Статус функции
 // expose_from_date            — Дата, начиная с которой голоса открываются для user_required_level, unix timestamp
 // user_required_level         — Требуемый уровень* пользователей для просмотра открытых голосов, а также просто запроса списка
 // superuser_required_level    — Требуемый уровень* для просмотра скрытых голосов
@@ -43,3 +48,7 @@ return [
 //     7 — все пользователи
 //     8 — все
 // См. также ModuleACL::CheckSimpleAccessLevel
+// -[ версия 2 ]->
+//     2   - Любой авторизованный пользователь, имеющий доступ к объекту на чтение
+//     128 - Администратор сайта
+// См. также ModuleACL::VoteListCheckAccess
