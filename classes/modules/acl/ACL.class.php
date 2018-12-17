@@ -754,7 +754,7 @@ class ModuleACL extends Module
     }
 
     // oTarget — Объект, к которому нужно проверить доступ при единичном запросе, ИЛИ true, если известно, что доступ к объекту уже есть
-    public function VoteListCheckAccess($oUser, $oTarget, $sTargetType)
+    public function VoteListCheckAccess($oUser, $oTarget, $sTargetType, $bRequireSuperuser=false)
     {
         $bEnable = Config::Get('vote_list.'.$sTargetType.'.enable');
         if (!$bEnable) {
@@ -762,7 +762,12 @@ class ModuleACL extends Module
             return false;
         }
         
-        $iUserRequiredLevel = Config::Get('vote_list.'.$sTargetType.'.user_required_level');
+        if ($bRequireSuperuser) {
+            $iUserRequiredLevel = Config::Get('vote_list.'.$sTargetType.'.superuser_required_level');
+        } else {
+            $iUserRequiredLevel = Config::Get('vote_list.'.$sTargetType.'.user_required_level');
+        }
+        
         switch ($iUserRequiredLevel) {
             case 128:
                 // Allow|Deny:
