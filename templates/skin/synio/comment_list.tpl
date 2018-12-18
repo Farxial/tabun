@@ -1,5 +1,4 @@
 <div class="comments comment-list">
-{assign var="iVoteInfoNeEnableLevel" value=$oConfig->getValue('vote_list.comment.user_required_level')}
 {foreach from=$aComments item=oComment}
     {assign var="oCommentAuthor" value=$oComment->getUser()}
     {assign var="oCommentAuthorLogin" value=$oCommentAuthor->getLogin()}
@@ -12,18 +11,13 @@
     {if $oUserCurrent}
         {assign var="oCommentRating" value=$oComment->getRating()}
         {assign var="oCommentVoteCount" value=$oComment->getCountVote()}
-        {if $iVoteInfoNeEnableLevel >= 6}
-            {assign var="bVoteInfoEnabled" value=true}
-        {else}
-            {assign var="bVoteInfoEnabled" value=$LS->ACL_CheckSimpleAccessLevel($iVoteInfoNeEnableLevel, $oUserCurrent, $oComment, 'comment')}
-        {/if}
     {/if}
 
     <section class="comment">
         <div class="comment-content">
             <div class="text">{$oComment->getText()}</div>
         </div>
-        <div class="comment-info{if $bVoteInfoEnabled} vote-info-enabled{/if}" data-id="{$oCommentId}">
+        <div class="comment-info{if $bVoteInfoEnabledForComments} vote-info-enabled{/if}" data-id="{$oCommentId}">
             <a href="/profile/{$oCommentAuthorLogin}">
                 <img src="{$oCommentAuthor->getProfileAvatarPath(24)}"  class="comment-avatar"/>
             </a>
