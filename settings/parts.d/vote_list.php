@@ -9,6 +9,7 @@ return [
         'superuser_required_level' => 128,
         'superuser_required_rating' => +20.0,
         'date_sort_mode' => SORT_ASC,
+        'enable_from_list' => true,
     ],
     'topic' => [
         'enable' => true,
@@ -18,6 +19,7 @@ return [
         'superuser_required_level' => 128,
         'superuser_required_rating' => +20.0,
         'date_sort_mode' => SORT_ASC,
+        'enable_from_list' => true,
     ],
     'blog' => [
         'enable' => true,
