@@ -753,7 +753,10 @@ class ModuleACL extends Module
                                     // Allow:
                                     return true;
                                 }
-                            }
+                            } else {
+								// Allow:
+								return true;
+							}
                         } else {
                             // Allow:
                             return true;
