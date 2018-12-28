@@ -3,7 +3,7 @@
 return [
     'comment' => [
         'enable' => true,
-        'expose_from_date' => 1548018000,   // strtotime('2019-01-21 +03:00')
+        'expose_from_date' => 1554670800,   // strtotime('2019-04-08 +03:00')
         'user_required_level' => 2,
         'user_required_rating' => +20.0,
         'superuser_required_level' => 128,
@@ -13,7 +13,7 @@ return [
     ],
     'topic' => [
         'enable' => true,
-        'expose_from_date' => 1548018000,   // strtotime('2019-01-21 +03:00')
+        'expose_from_date' => 1554670800,   // strtotime('2019-04-08 +03:00')
         'user_required_level' => 2,
         'user_required_rating' => +20.0,
         'superuser_required_level' => 128,
@@ -23,7 +23,7 @@ return [
     ],
     'blog' => [
         'enable' => true,
-        'expose_from_date' => 1548018000,   // strtotime('2019-01-21 +03:00')
+        'expose_from_date' => 1554670800,   // strtotime('2019-04-08 +03:00')
         'user_required_level' => 2,
         'user_required_rating' => +20.0,
         'superuser_required_level' => 128,
@@ -32,7 +32,7 @@ return [
     ],
     'user' => [
         'enable' => true,
-        'expose_from_date' => 1548018000,   // strtotime('2019-01-21 +03:00')
+        'expose_from_date' => 1554670800,   // strtotime('2019-04-08 +03:00')
         'user_required_level' => 2,
         'user_required_rating' => +20.0,
         'superuser_required_level' => 128,
